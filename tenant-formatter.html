@@ -395,9 +395,11 @@
       for (const key of ALL_FIELD_KEYS) detected[key] = bestFor(key);
 
       // Address mode: combined wins if its score beats the average of the four separate-mode scores
-      const combinedScore  = detected.addressColumn.score;
-      const separateAvg    = ['streetAddress','city','state','zip'].reduce((s,k) => s + detected[k].score, 0) / 4;
-      detected.addrMode    = combinedScore >= separateAvg ? 'combined' : 'separate';
+      // Use combined mode whenever any column matches the combined-address value pattern
+      // well enough (score >= 0.35). The trailing ", ST, DDDDD" regex is specific enough
+      // that a false positive is extremely unlikely. Comparing against separateAvg was
+      // unreliable when the file also has separate city/state/zip columns.
+      detected.addrMode = detected.addressColumn.score >= 0.35 ? 'combined' : 'separate';
 
       // Name mode: use separate only if distinct first+last columns both score >= 0.5
       const fn = detected.firstName, ln = detected.lastName;
