@@ -274,7 +274,7 @@
 
     // Header vs value weight per field: [headerWeight, valueWeight]
     const WEIGHTS = {
-      addressColumn: [0.25, 0.75],
+      addressColumn: [0.50, 0.50],
       streetAddress: [0.50, 0.50],
       unit:          [0.75, 0.25],
       city:          [0.60, 0.40],
@@ -319,9 +319,10 @@
 
       switch (fieldKey) {
         case 'addressColumn': {
-          // Value ends with ", XX, DDDDD" — the most distinctive pattern in the whole file
-          const re = /,\s*[A-Za-z]{2}\s*,\s*\d{4,5}(-\d{4})?\s*$/;
-          return vals.filter(v => re.test(v)).length / n;
+          // Combined address: ends with a 2-letter state + 5-digit zip (comma OR space separated)
+          // and has at least one comma indicating multiple address components
+          const re = /(?:,\s*|\s+)\b[A-Za-z]{2}\b(?:,\s*|\s+)\d{5}(-\d{4})?\s*$/;
+          return vals.filter(v => re.test(v) && v.includes(',')).length / n;
         }
         case 'streetAddress': {
           // Starts with a house number
@@ -394,12 +395,10 @@
 
       for (const key of ALL_FIELD_KEYS) detected[key] = bestFor(key);
 
-      // Address mode: combined wins if its score beats the average of the four separate-mode scores
-      // Use combined mode whenever any column matches the combined-address value pattern
-      // well enough (score >= 0.35). The trailing ", ST, DDDDD" regex is specific enough
-      // that a false positive is extremely unlikely. Comparing against separateAvg was
-      // unreliable when the file also has separate city/state/zip columns.
-      detected.addrMode = detected.addressColumn.score >= 0.35 ? 'combined' : 'separate';
+      // Use combined mode when a column scores >= 0.25 for combined-address detection.
+      // With 50/50 header/value weights, a perfect header match ("Full Address", "Address", etc.)
+      // alone contributes 0.50, so this threshold is met even when value scoring is imperfect.
+      detected.addrMode = detected.addressColumn.score >= 0.25 ? 'combined' : 'separate';
 
       // Name mode: use separate only if distinct first+last columns both score >= 0.5
       const fn = detected.firstName, ln = detected.lastName;
@@ -459,8 +458,14 @@
           const ws   = wb.Sheets[wb.SheetNames[0]];
           const data = XLSX.utils.sheet_to_json(ws, { defval: '' });
           if (!data.length) { showErr('err-upload', 'File is empty — make sure it has a header row and data.'); return; }
-          headers = Object.keys(data[0]);
-          rows    = data;
+          // Normalize header keys: trim any leading/trailing whitespace Excel may leave
+          const rawKeys = Object.keys(data[0]);
+          headers = rawKeys.map(h => h.trim());
+          rows = data.map(row => {
+            const r = {};
+            rawKeys.forEach(h => { r[h.trim()] = row[h]; });
+            return r;
+          });
           detectAll();
           toStep(2);
         } catch {
@@ -660,14 +665,29 @@
     function parseAddress(combined) {
       if (!combined) return { street: '', unit: '', city: '', state: '', zip: '' };
 
-      const parts = combined.split(',').map(p => p.trim()).filter(Boolean);
-      if (parts.length < 4) return { street: combined.trim(), unit: '', city: '', state: '', zip: '' };
+      const s = combined.trim();
 
-      const zip    = parts.pop();
-      const state  = parts.pop();
+      // Anchor on zip (5-digit, optionally -4) at end of string
+      const zipM = s.match(/\b(\d{5}(?:-\d{4})?)\s*$/);
+      if (!zipM) return { street: s, unit: '', city: '', state: '', zip: '' };
+      const zip = zipM[1];
+
+      // Strip zip from the end, then find the 2-letter US state right before it
+      const beforeZip = s.slice(0, zipM.index).replace(/[,\s]+$/, '');
+      const stateM = beforeZip.match(/(?:^|[,\s])\b([A-Za-z]{2})\b\s*$/);
+      if (!stateM || !US_STATES.has(stateM[1].toUpperCase())) {
+        return { street: s, unit: '', city: '', state: '', zip };
+      }
+      const state = stateM[1].toUpperCase();
+
+      // Strip state from the end; remaining segments (comma-split) are: street [, unit …] [, city]
+      const beforeState = beforeZip.slice(0, beforeZip.length - stateM[0].length).replace(/[,\s]+$/, '').trim();
+      const parts = beforeState.split(',').map(p => p.trim()).filter(Boolean);
+
+      if (!parts.length) return { street: '', unit: '', city: '', state, zip };
       const city   = parts.pop();
-      const street = parts.shift();
-      const unit   = parts.join(', ');   // anything between street and city
+      const street = parts.shift() || '';
+      const unit   = parts.join(', ');
 
       return { street, unit, city, state, zip };
     }
