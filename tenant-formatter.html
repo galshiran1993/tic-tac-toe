@@ -10,138 +10,131 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #1a1a2e;
-      color: #eee;
-      min-height: 100vh;
-      padding: 40px 20px 80px;
+      background: #1a1a2e; color: #eee;
+      min-height: 100vh; padding: 40px 20px 80px;
     }
 
     header { text-align: center; margin-bottom: 36px; }
     header h1 { font-size: 2rem; color: #e94560; letter-spacing: 2px; font-weight: 700; }
-    header p { color: #a8b2d8; margin-top: 8px; font-size: 0.95rem; }
+    header p  { color: #a8b2d8; margin-top: 8px; font-size: 0.95rem; }
 
-    .steps {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 36px;
-    }
-
-    .step { display: flex; align-items: center; gap: 8px; color: #3a4a6a; transition: color 0.2s; }
+    /* Steps */
+    .steps { display: flex; justify-content: center; align-items: center; margin-bottom: 36px; }
+    .step  { display: flex; align-items: center; gap: 8px; color: #3a4a6a; transition: color .2s; }
     .step.active { color: #e94560; }
     .step.done   { color: #4ecca3; }
-
     .step-num {
-      width: 30px; height: 30px; border-radius: 50%;
-      border: 2px solid currentColor;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.8rem; font-weight: 700;
+      width: 30px; height: 30px; border-radius: 50%; border: 2px solid currentColor;
+      display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700;
     }
-
     .step.done .step-num { background: #4ecca3; border-color: #4ecca3; color: #1a1a2e; }
-    .step-label { font-size: 0.88rem; font-weight: 600; }
-    .step-line { width: 48px; height: 2px; background: #0f3460; margin: 0 8px; }
+    .step-label { font-size: .88rem; font-weight: 600; }
+    .step-line  { width: 48px; height: 2px; background: #0f3460; margin: 0 8px; }
 
+    /* Card */
     .card {
-      background: #16213e;
-      border: 1px solid #0f3460;
-      border-radius: 16px;
-      padding: 32px;
-      max-width: 820px;
-      margin: 0 auto 24px;
+      background: #16213e; border: 1px solid #0f3460; border-radius: 16px;
+      padding: 32px; max-width: 860px; margin: 0 auto 24px;
     }
+    .card-title { font-size: .8rem; font-weight: 700; letter-spacing: 2px; color: #e94560; margin-bottom: 22px; }
 
-    .card-title {
-      font-size: 0.8rem; font-weight: 700;
-      letter-spacing: 2px; color: #e94560; margin-bottom: 22px;
-    }
-
-    /* Upload */
+    /* Upload zone */
     #upload-zone {
-      border: 2px dashed #0f3460; border-radius: 12px;
-      padding: 64px 20px; text-align: center; cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
+      border: 2px dashed #0f3460; border-radius: 12px; padding: 64px 20px;
+      text-align: center; cursor: pointer; transition: border-color .2s, background .2s;
     }
-    #upload-zone:hover, #upload-zone.dragover { border-color: #e94560; background: rgba(233,69,96,0.04); }
-    #upload-zone .icon { font-size: 2.8rem; margin-bottom: 14px; }
+    #upload-zone:hover, #upload-zone.dragover { border-color: #e94560; background: rgba(233,69,96,.04); }
+    #upload-zone .icon      { font-size: 2.8rem; margin-bottom: 14px; }
     #upload-zone .main-text { font-size: 1rem; color: #cdd; margin-bottom: 6px; }
-    #upload-zone .sub-text  { font-size: 0.82rem; color: #4a5568; }
+    #upload-zone .sub-text  { font-size: .82rem; color: #4a5568; }
     #file-input { display: none; }
 
     /* File bar */
     .file-bar {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 16px;
-      background: rgba(78,204,163,0.08); border: 1px solid rgba(78,204,163,0.3);
+      display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+      background: rgba(78,204,163,.08); border: 1px solid rgba(78,204,163,.3);
       border-radius: 10px; margin-bottom: 22px;
     }
-    .file-bar .file-name { font-weight: 600; font-size: 0.9rem; color: #4ecca3; }
-    .file-bar .file-meta { font-size: 0.8rem; color: #a8b2d8; }
-    .btn-ghost { margin-left: auto; background: none; border: none; color: #a8b2d8; cursor: pointer; font-size: 0.8rem; text-decoration: underline; padding: 0; }
+    .file-bar .file-name { font-weight: 600; font-size: .9rem; color: #4ecca3; }
+    .file-bar .file-meta { font-size: .8rem; color: #a8b2d8; }
+    .btn-ghost { margin-left: auto; background: none; border: none; color: #a8b2d8; cursor: pointer; font-size: .8rem; text-decoration: underline; padding: 0; }
     .btn-ghost:hover { color: #eee; }
 
-    /* Address mode toggle */
-    .mode-label { font-size: 0.82rem; font-weight: 700; letter-spacing: 1px; color: #a8b2d8; text-transform: uppercase; margin-bottom: 10px; }
+    /* Section divider */
+    .section-divider {
+      font-size: .72rem; font-weight: 700; letter-spacing: 1.5px; color: #3a4a6a;
+      text-transform: uppercase; padding: 18px 0 10px;
+      border-top: 1px solid rgba(15,52,96,.6); margin-top: 4px;
+    }
+    .section-divider.no-top { border-top: none; padding-top: 0; }
 
-    .mode-tabs { display: flex; gap: 10px; margin-bottom: 28px; }
-
+    /* Mode tabs */
+    .mode-tabs  { display: flex; gap: 10px; margin-bottom: 18px; }
     .mode-tab {
-      flex: 1; padding: 14px 16px;
-      background: #1a1a2e; border: 2px solid #0f3460; border-radius: 10px;
-      cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      flex: 1; padding: 12px 14px; background: #1a1a2e;
+      border: 2px solid #0f3460; border-radius: 10px; cursor: pointer;
+      transition: border-color .2s, background .2s;
     }
     .mode-tab:hover:not(.active) { border-color: #2a4a7a; }
-    .mode-tab.active { border-color: #e94560; background: rgba(233,69,96,0.05); }
-    .mode-tab strong { display: block; font-size: 0.88rem; color: #cdd; margin-bottom: 4px; }
+    .mode-tab.active { border-color: #e94560; background: rgba(233,69,96,.05); }
+    .mode-tab strong { display: block; font-size: .87rem; color: #cdd; margin-bottom: 3px; }
     .mode-tab.active strong { color: #e94560; }
-    .mode-tab small { font-size: 0.76rem; color: #4a5568; }
+    .mode-tab small  { font-size: .74rem; color: #4a5568; }
     .mode-tab.active small { color: #a8b2d8; }
 
-    /* Mapping */
-    .map-hint { font-size: 0.88rem; color: #a8b2d8; margin-bottom: 16px; }
-    .map-hint span { color: #e94560; }
-
-    .section-divider {
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px;
-      color: #3a4a6a; text-transform: uppercase;
-      padding: 16px 0 10px;
-      border-top: 1px solid rgba(15,52,96,0.6);
-      margin-top: 4px;
-    }
-
+    /* Field rows — 3-column grid: label | select+sample | badge */
     .field-row {
-      display: grid; grid-template-columns: 215px 1fr;
-      align-items: center; gap: 16px;
-      padding: 11px 0;
-      border-bottom: 1px solid rgba(15,52,96,0.8);
+      display: grid; grid-template-columns: 195px 1fr auto;
+      align-items: start; gap: 14px;
+      padding: 10px 0; border-bottom: 1px solid rgba(15,52,96,.7);
     }
     .field-row:last-child { border-bottom: none; }
+    .field-row.auto-row   { align-items: center; }
 
-    .field-label { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: #cdd; }
-
+    .field-label { display: flex; align-items: center; gap: 8px; font-size: .87rem; color: #cdd; padding-top: 10px; }
+    .auto-row .field-label { padding-top: 0; }
     .col-tag {
       display: inline-flex; align-items: center; justify-content: center;
-      min-width: 26px; height: 22px; padding: 0 6px;
-      background: #0f3460; color: #4ecca3;
-      font-size: 0.7rem; font-weight: 700; border-radius: 4px; letter-spacing: 0.5px;
+      min-width: 30px; height: 22px; padding: 0 6px;
+      background: #0f3460; color: #4ecca3; font-size: .68rem; font-weight: 700;
+      border-radius: 4px; letter-spacing: .5px; flex-shrink: 0;
     }
+    .req { color: #e94560; font-size: .75rem; }
+    .auto-label { font-size: .81rem; color: #3a4a6a; font-style: italic; }
 
-    .req { color: #e94560; font-size: 0.75rem; }
-    .auto-label { font-size: 0.82rem; color: #3a4a6a; font-style: italic; }
-
+    /* Select */
     select {
       width: 100%; background: #1a1a2e; border: 1px solid #0f3460; color: #eee;
-      padding: 9px 36px 9px 12px; border-radius: 8px; font-size: 0.88rem;
-      cursor: pointer; appearance: none;
+      padding: 9px 36px 9px 12px; border-radius: 8px; font-size: .87rem; cursor: pointer;
+      appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23a8b2d8' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 12px center;
-      transition: border-color 0.15s;
+      transition: border-color .15s;
     }
     select:focus { outline: none; border-color: #e94560; }
     select option { background: #1a1a2e; }
 
+    /* Sample value below select */
+    .sample-value {
+      font-size: .72rem; color: #4a5568; margin-top: 5px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+      min-height: 1em;
+    }
+    .sample-value b { color: #a8b2d8; font-style: normal; }
+
+    /* Confidence badge */
+    .confidence-badge {
+      font-size: .67rem; font-weight: 700; letter-spacing: .5px;
+      padding: 4px 9px; border-radius: 12px; white-space: nowrap;
+      text-transform: uppercase; margin-top: 10px; align-self: start;
+    }
+    .badge-high { background: rgba(78,204,163,.14); color: #4ecca3; border: 1px solid rgba(78,204,163,.35); }
+    .badge-mid  { background: rgba(255,192,80,.1);  color: #ffc050; border: 1px solid rgba(255,192,80,.3); }
+    .badge-low  { background: rgba(233,69,96,.1);   color: #e94560; border: 1px solid rgba(233,69,96,.25); }
+    .badge-none { background: rgba(58,74,106,.2);   color: #3a4a6a; border: 1px solid #0f3460; }
+
     /* Buttons */
-    .btn { padding: 11px 26px; font-size: 0.9rem; font-weight: 600; border-radius: 8px; cursor: pointer; letter-spacing: 0.5px; transition: all 0.15s; }
+    .btn { padding: 11px 26px; font-size: .9rem; font-weight: 600; border-radius: 8px; cursor: pointer; letter-spacing: .5px; transition: all .15s; }
     .btn-primary { background: #e94560; color: #fff; border: 2px solid #e94560; }
     .btn-primary:hover { background: #c73652; border-color: #c73652; }
     .btn-outline { background: transparent; color: #4ecca3; border: 2px solid #4ecca3; }
@@ -150,54 +143,41 @@
 
     /* Preview */
     .preview-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
-    .preview-header .card-title { margin: 0; }
-
-    .badge { background: #0f3460; color: #a8b2d8; padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; margin-left: 8px; }
-
+    .badge { background: #0f3460; color: #a8b2d8; padding: 3px 10px; border-radius: 20px; font-size: .78rem; margin-left: 8px; }
     .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid #0f3460; }
-
-    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-
+    table { width: 100%; border-collapse: collapse; font-size: .79rem; }
     th {
-      background: #0f3460; color: #4ecca3;
-      padding: 9px 13px; text-align: left; font-weight: 700;
-      white-space: nowrap; font-size: 0.75rem; letter-spacing: 0.5px;
+      background: #0f3460; color: #4ecca3; padding: 9px 13px;
+      text-align: left; font-weight: 700; white-space: nowrap; font-size: .73rem; letter-spacing: .5px;
     }
     th.col-c-head { color: #3a4a6a; }
-
     td {
-      padding: 8px 13px;
-      border-bottom: 1px solid rgba(15,52,96,0.6);
-      color: #cdd; white-space: nowrap;
-      max-width: 200px; overflow: hidden; text-overflow: ellipsis;
+      padding: 7px 13px; border-bottom: 1px solid rgba(15,52,96,.6);
+      color: #cdd; white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis;
     }
     tr:last-child td { border-bottom: none; }
-    tr:hover td { background: rgba(15,52,96,0.35); }
-
-    .td-blank  { color: #2a3a5a !important; font-style: italic; }
-    .td-auto   { color: #a8b2d8; }
-    .td-invalid { background: rgba(233,69,96,0.15) !important; color: #e94560 !important; font-weight: 600; }
-
-    .preview-note { font-size: 0.78rem; color: #3a4a6a; margin-top: 10px; text-align: right; }
+    tr:hover td { background: rgba(15,52,96,.35); }
+    .td-blank   { color: #2a3a5a !important; font-style: italic; }
+    .td-auto    { color: #a8b2d8; }
+    .td-invalid { background: rgba(233,69,96,.14) !important; color: #e94560 !important; font-weight: 600; }
+    .preview-note { font-size: .76rem; color: #3a4a6a; margin-top: 10px; text-align: right; }
 
     /* Validation summary */
     .val-warn {
-      display: flex; align-items: flex-start; gap: 10px;
       padding: 12px 16px; margin-top: 14px;
-      background: rgba(233,69,96,0.08); border: 1px solid rgba(233,69,96,0.3);
-      border-radius: 8px; font-size: 0.84rem; color: #e94560;
-    }
-    .val-ok {
-      display: flex; align-items: center; gap: 10px;
-      padding: 12px 16px; margin-top: 14px;
-      background: rgba(78,204,163,0.07); border: 1px solid rgba(78,204,163,0.25);
-      border-radius: 8px; font-size: 0.84rem; color: #4ecca3;
+      background: rgba(233,69,96,.07); border: 1px solid rgba(233,69,96,.28);
+      border-radius: 8px; font-size: .83rem; color: #e94560;
     }
     .val-warn ul { margin: 6px 0 0 4px; padding-left: 16px; }
     .val-warn li { margin-top: 3px; color: #f07080; }
+    .val-ok {
+      display: flex; align-items: center; gap: 8px; padding: 12px 16px; margin-top: 14px;
+      background: rgba(78,204,163,.07); border: 1px solid rgba(78,204,163,.25);
+      border-radius: 8px; font-size: .83rem; color: #4ecca3;
+    }
 
     /* Error */
-    .error-msg { color: #e94560; font-size: 0.84rem; margin-top: 10px; display: none; }
+    .error-msg { color: #e94560; font-size: .84rem; margin-top: 10px; display: none; }
     .hidden { display: none !important; }
   </style>
 </head>
@@ -205,13 +185,13 @@
 
   <header>
     <h1>TENANT DATA FORMATTER</h1>
-    <p>Upload your file, map your columns, download a clean CSV.</p>
+    <p>Upload your file — columns are detected automatically.</p>
   </header>
 
   <div class="steps">
     <div class="step active" id="ind-1"><div class="step-num">1</div><span class="step-label">Upload</span></div>
     <div class="step-line"></div>
-    <div class="step" id="ind-2"><div class="step-num">2</div><span class="step-label">Map Columns</span></div>
+    <div class="step" id="ind-2"><div class="step-num">2</div><span class="step-label">Review</span></div>
     <div class="step-line"></div>
     <div class="step" id="ind-3"><div class="step-num">3</div><span class="step-label">Download</span></div>
   </div>
@@ -228,9 +208,9 @@
     <div class="error-msg" id="err-upload"></div>
   </div>
 
-  <!-- Step 2: Map -->
+  <!-- Step 2: Review detected columns -->
   <div class="card hidden" id="s2">
-    <div class="card-title">MAP YOUR COLUMNS</div>
+    <div class="card-title">REVIEW DETECTED COLUMNS</div>
     <div class="file-bar">
       <span>📄</span>
       <div>
@@ -239,24 +219,10 @@
       </div>
       <button class="btn-ghost" id="btn-change">Change file</button>
     </div>
-
-    <div class="mode-label">Address format in your file</div>
-    <div class="mode-tabs">
-      <div class="mode-tab active" id="tab-combined" onclick="setAddrMode('combined')">
-        <strong>All in one column</strong>
-        <small>"32 Main St, Unit 2, New York, NY, 10001"</small>
-      </div>
-      <div class="mode-tab" id="tab-separate" onclick="setAddrMode('separate')">
-        <strong>Separate columns</strong>
-        <small>Street, City, State, and Zip each in their own column</small>
-      </div>
-    </div>
-
-    <p class="map-hint">Match each output column to one of your file's columns. Required fields are marked <span>*</span>.</p>
     <div id="map-fields"></div>
     <div class="error-msg" id="err-map"></div>
     <div class="btn-row">
-      <button class="btn btn-primary" id="btn-preview">Preview Output →</button>
+      <button class="btn btn-primary" id="btn-preview">Generate Preview →</button>
     </div>
   </div>
 
@@ -267,20 +233,18 @@
         <span class="card-title" style="display:inline">PREVIEW</span>
         <span class="badge" id="row-badge"></span>
       </div>
-      <div style="display:flex; gap:10px;">
+      <div style="display:flex;gap:10px;">
         <button class="btn btn-outline" id="btn-back">← Back</button>
         <button class="btn btn-primary" id="btn-dl">⬇ Download CSV</button>
       </div>
     </div>
-    <div class="table-wrap">
-      <table id="preview-tbl"></table>
-    </div>
-    <p class="preview-note">Showing first 10 rows. All rows are included in the download.</p>
+    <div class="table-wrap"><table id="preview-tbl"></table></div>
+    <p class="preview-note">Showing first 10 rows. All rows included in the download.</p>
     <div id="val-result"></div>
   </div>
 
   <script>
-    // ── Constants ────────────────────────────────────────────────────────────
+    // ── Constants ─────────────────────────────────────────────────────────────
 
     const US_STATES = new Set([
       'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA',
@@ -291,41 +255,180 @@
     ]);
 
     const ZIP_RE = /^\d{5}(-\d{4})?$/;
-
-    const ADDR_FIELDS = [
-      { key: 'streetAddress', label: 'Street Address', col: 'A', required: true },
-      { key: 'unit',          label: 'Unit',           col: 'B', required: false },
-      { key: 'city',          label: 'City',           col: 'D', required: true },
-      { key: 'state',         label: 'State',          col: 'E', required: true },
-      { key: 'zip',           label: 'Zip Code',       col: 'F', required: true },
-    ];
-
-    const CONTACT_FIELDS = [
-      { key: 'firstName', label: 'First Name', col: 'G', required: true },
-      { key: 'lastName',  label: 'Last Name',  col: 'H', required: true },
-      { key: 'email',     label: 'Email',      col: 'J', required: false },
-    ];
-
     const OUT_HEADERS = ['Street Address','Unit','','City','State','Zip Code','First Name','Last Name','Full Name','Email'];
+    const ALL_FIELD_KEYS = ['addressColumn','streetAddress','unit','city','state','zip','firstName','lastName','fullName','email'];
 
+    // Header hints — normalized to lowercase no-spaces for matching
     const HINTS = {
-      addressColumn: ['address', 'full address', 'mailing', 'property address', 'location'],
-      streetAddress: ['address', 'street', 'addr', 'property'],
-      unit:          ['unit', 'apt', 'apartment', 'suite', 'ste'],
-      city:          ['city', 'town'],
-      state:         ['state', 'province'],
-      zip:           ['zip', 'postal', 'zipcode', 'post code'],
-      firstName:     ['first', 'fname', 'given'],
-      lastName:      ['last', 'lname', 'surname', 'family'],
-      email:         ['email', 'e-mail', 'mail'],
+      addressColumn: ['address','fulladdress','propertyaddress','mailingaddress','streetaddress','location','fulladdr'],
+      streetAddress: ['street','streetaddress','streetaddr','propertyaddress','addr'],
+      unit:          ['unit','apt','apartment','suite','ste','unitno','aptnumber','unitnumber'],
+      city:          ['city','town','municipality','cityname'],
+      state:         ['state','province','statecode'],
+      zip:           ['zip','zipcode','postalcode','postal','postcode'],
+      firstName:     ['firstname','fname','givenname','given','first'],
+      lastName:      ['lastname','lname','surname','familyname','family','last'],
+      fullName:      ['name','fullname','tenantname','residentname','tenant','resident','occupant','lessee','renter','contact'],
+      email:         ['email','emailaddress','mail'],
     };
 
-    // ── State ────────────────────────────────────────────────────────────────
+    // Header vs value weight per field: [headerWeight, valueWeight]
+    const WEIGHTS = {
+      addressColumn: [0.25, 0.75],
+      streetAddress: [0.50, 0.50],
+      unit:          [0.75, 0.25],
+      city:          [0.60, 0.40],
+      state:         [0.25, 0.75],
+      zip:           [0.25, 0.75],
+      firstName:     [0.75, 0.25],
+      lastName:      [0.75, 0.25],
+      fullName:      [0.50, 0.50],
+      email:         [0.25, 0.75],
+    };
+
+    // ── App state ─────────────────────────────────────────────────────────────
 
     let headers = [], rows = [], outputData = [], fileName = '';
-    let addrMode = 'combined';   // 'combined' | 'separate'
 
-    // ── Upload ───────────────────────────────────────────────────────────────
+    const EMPTY_DET = () => ({ column: null, score: 0, confidence: 'none' });
+
+    let detected = {
+      addrMode: 'combined', nameMode: 'combined',
+      addressColumn: EMPTY_DET(), streetAddress: EMPTY_DET(), unit: EMPTY_DET(),
+      city: EMPTY_DET(), state: EMPTY_DET(), zip: EMPTY_DET(),
+      firstName: EMPTY_DET(), lastName: EMPTY_DET(), fullName: EMPTY_DET(), email: EMPTY_DET(),
+    };
+
+    // ── Detection engine ──────────────────────────────────────────────────────
+
+    function getSamples(colName, max = 15) {
+      return rows.slice(0, 30).map(r => String(r[colName] ?? '').trim()).filter(Boolean).slice(0, max);
+    }
+
+    function scoreHeader(header, fieldKey) {
+      const h = header.toLowerCase().replace(/[\s_\-]/g, '');
+      const hints = HINTS[fieldKey] || [];
+      if (hints.includes(h)) return 1.0;
+      if (hints.some(hint => h.includes(hint) || hint.includes(h))) return 0.7;
+      return 0.0;
+    }
+
+    function scoreValues(vals, fieldKey) {
+      if (!vals.length) return 0;
+      const n = vals.length;
+
+      switch (fieldKey) {
+        case 'addressColumn': {
+          // Value ends with ", XX, DDDDD" — the most distinctive pattern in the whole file
+          const re = /,\s*[A-Za-z]{2}\s*,\s*\d{4,5}(-\d{4})?\s*$/;
+          return vals.filter(v => re.test(v)).length / n;
+        }
+        case 'streetAddress': {
+          // Starts with a house number
+          return vals.filter(v => /^\d+\s+[A-Za-z]/.test(v)).length / n;
+        }
+        case 'unit': {
+          // Short alphanumeric, optionally prefixed with unit/apt/suite/#
+          return vals.filter(v => /^(unit|apt|suite|ste|#)?\s*[\w\-]{1,8}$/i.test(v)).length / n * 0.6;
+        }
+        case 'city': {
+          return vals.filter(v => {
+            const c = v.trim();
+            return /^[A-Za-z\s\-']+$/.test(c) && c.split(/\s+/).length <= 4
+              && !US_STATES.has(c.toUpperCase().trim());
+          }).length / n;
+        }
+        case 'state': {
+          return vals.filter(v => US_STATES.has(v.trim().toUpperCase())).length / n;
+        }
+        case 'zip': {
+          return vals.filter(v => /^\d{4,5}(-\d{4})?$/.test(String(v).trim())).length / n;
+        }
+        case 'firstName':
+        case 'lastName': {
+          // Single alphabetic word
+          return vals.filter(v => /^[A-Za-z'\-]{1,25}$/.test(v.trim())).length / n * 0.5;
+        }
+        case 'fullName': {
+          // 2–4 alphabetic words, OR "Last, First" comma format
+          const re = /^[A-Za-z'\-]+$/;
+          return vals.filter(v => {
+            const clean = v.trim().replace(/,/g, '');
+            const words = clean.split(/\s+/).filter(Boolean);
+            return (v.includes(',') || words.length >= 2) && words.length <= 5 && words.every(w => re.test(w));
+          }).length / n;
+        }
+        case 'email': {
+          return vals.filter(v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())).length / n;
+        }
+        default: return 0;
+      }
+    }
+
+    function scoreColumn(header, vals, fieldKey) {
+      const [hw, vw] = WEIGHTS[fieldKey] || [0.5, 0.5];
+      return Math.min(1.0, scoreHeader(header, fieldKey) * hw + scoreValues(vals, fieldKey) * vw);
+    }
+
+    function scoreToConfidence(s) {
+      return s >= 0.75 ? 'high' : s >= 0.45 ? 'mid' : s > 0.05 ? 'low' : 'none';
+    }
+
+    function detectAll() {
+      const allScores = {};
+      for (const h of headers) {
+        const vals = getSamples(h);
+        allScores[h] = {};
+        for (const key of ALL_FIELD_KEYS) {
+          allScores[h][key] = scoreColumn(h, vals, key);
+        }
+      }
+
+      function bestFor(key) {
+        let bestCol = null, bestScore = 0;
+        for (const h of headers) {
+          if (allScores[h][key] > bestScore) { bestScore = allScores[h][key]; bestCol = h; }
+        }
+        return { column: bestScore > 0.05 ? bestCol : null, score: bestScore, confidence: scoreToConfidence(bestScore) };
+      }
+
+      for (const key of ALL_FIELD_KEYS) detected[key] = bestFor(key);
+
+      // Address mode: combined wins if its score beats the average of the four separate-mode scores
+      const combinedScore  = detected.addressColumn.score;
+      const separateAvg    = ['streetAddress','city','state','zip'].reduce((s,k) => s + detected[k].score, 0) / 4;
+      detected.addrMode    = combinedScore >= separateAvg ? 'combined' : 'separate';
+
+      // Name mode: use separate only if distinct first+last columns both score >= 0.5
+      const fn = detected.firstName, ln = detected.lastName;
+      const addrCol = detected.addressColumn.column, emailCol = detected.email.column;
+      const fnOk = fn.column && fn.column !== addrCol && fn.column !== emailCol;
+      const lnOk = ln.column && ln.column !== addrCol && ln.column !== emailCol && ln.column !== fn.column;
+      detected.nameMode = (fn.score >= 0.5 && ln.score >= 0.5 && fnOk && lnOk) ? 'separate' : 'combined';
+    }
+
+    // ── Name parsing ──────────────────────────────────────────────────────────
+
+    function toTitleCase(str) {
+      return str.toLowerCase().replace(/\b([a-z])/g, c => c.toUpperCase());
+    }
+
+    function parseName(raw) {
+      if (!raw) return { first: '', last: '' };
+      const normed = toTitleCase(raw.trim());
+
+      if (normed.includes(',')) {
+        const [last, ...rest] = normed.split(',').map(s => s.trim());
+        return { first: rest.join(' ').trim(), last };
+      }
+
+      const words = normed.split(/\s+/).filter(Boolean);
+      if (words.length === 0) return { first: '', last: '' };
+      if (words.length === 1) return { first: words[0], last: '' };
+      return { first: words[0], last: words[words.length - 1] };
+    }
+
+    // ── Upload ────────────────────────────────────────────────────────────────
 
     const zone      = document.getElementById('upload-zone');
     const fileInput = document.getElementById('file-input');
@@ -342,8 +445,7 @@
     function loadFile(file) {
       const ext = file.name.split('.').pop().toLowerCase();
       if (!['xlsx','xls','csv'].includes(ext)) {
-        showErr('err-upload', 'Please upload an .xlsx, .xls, or .csv file.');
-        return;
+        showErr('err-upload', 'Please upload an .xlsx, .xls, or .csv file.'); return;
       }
       clearErr('err-upload');
       fileName = file.name;
@@ -354,24 +456,24 @@
           const wb   = XLSX.read(e.target.result, { type: 'array' });
           const ws   = wb.Sheets[wb.SheetNames[0]];
           const data = XLSX.utils.sheet_to_json(ws, { defval: '' });
-          if (!data.length) { showErr('err-upload', 'The file appears empty. Make sure it has a header row and data rows.'); return; }
+          if (!data.length) { showErr('err-upload', 'File is empty — make sure it has a header row and data.'); return; }
           headers = Object.keys(data[0]);
           rows    = data;
+          detectAll();
           toStep(2);
         } catch {
-          showErr('err-upload', 'Could not parse the file. Make sure it is a valid Excel or CSV file.');
+          showErr('err-upload', 'Could not read the file. Make sure it is a valid Excel or CSV file.');
         }
       };
       reader.readAsArrayBuffer(file);
     }
 
-    // ── Navigation ───────────────────────────────────────────────────────────
+    // ── Navigation ────────────────────────────────────────────────────────────
 
     function toStep(n) {
       ['s1','s2','s3'].forEach((id, i) => toggle(id, i + 1 === n));
       [1,2,3].forEach(i => {
-        document.getElementById(`ind-${i}`).className =
-          'step ' + (i < n ? 'done' : i === n ? 'active' : '');
+        document.getElementById(`ind-${i}`).className = 'step ' + (i < n ? 'done' : i === n ? 'active' : '');
       });
       if (n === 2) renderMap();
     }
@@ -379,16 +481,7 @@
     document.getElementById('btn-change').addEventListener('click', () => { fileInput.value = ''; toStep(1); });
     document.getElementById('btn-back').addEventListener('click',   () => toStep(2));
 
-    // ── Address mode ─────────────────────────────────────────────────────────
-
-    function setAddrMode(mode) {
-      addrMode = mode;
-      document.getElementById('tab-combined').classList.toggle('active', mode === 'combined');
-      document.getElementById('tab-separate').classList.toggle('active', mode === 'separate');
-      renderMapFields();
-    }
-
-    // ── Mapping UI ───────────────────────────────────────────────────────────
+    // ── Review UI ─────────────────────────────────────────────────────────────
 
     function renderMap() {
       document.getElementById('fi-name').textContent = fileName;
@@ -401,82 +494,163 @@
       const c = document.getElementById('map-fields');
       c.innerHTML = '';
 
-      if (addrMode === 'combined') {
-        // Single combined address column
-        c.appendChild(makeDivider('Address (columns A – F)'));
-        c.appendChild(makeSelectRow(
-          { key: 'addressColumn', label: 'Combined Address', col: 'A–F', required: true },
-          'One column containing: Street, Unit (optional), City, State, Zip'
-        ));
-        // Show the auto-rows for C (blank) so user sees the template
+      // ── ADDRESS ───────────────────────────────────────────────────────────
+      c.appendChild(makeDivider('Address — Columns A – F', true));
+      c.appendChild(makeModeTabs(
+        'addrMode',
+        [
+          { value: 'combined', label: 'All in one column',  sub: '"32 Main St, Unit 2, New York, NY, 10001"' },
+          { value: 'separate', label: 'Separate columns',   sub: 'Street, City, State, Zip each in own column' },
+        ],
+        detected.addrMode,
+        mode => { detected.addrMode = mode; renderMapFields(); }
+      ));
+
+      if (detected.addrMode === 'combined') {
+        c.appendChild(makeDetectedRow({ key: 'addressColumn', label: 'Combined Address', col: 'A–F', required: true }));
         c.appendChild(makeAutoRow('C', 'Blank Column', 'Always empty'));
       } else {
-        // Individual address columns
-        c.appendChild(makeDivider('Address (columns A – F)'));
-        ADDR_FIELDS.forEach(f => c.appendChild(makeSelectRow(f)));
-        // Insert C (blank) after B — capture rows first
-        const addrRows = Array.from(c.querySelectorAll('.field-row'));
-        c.insertBefore(makeAutoRow('C', 'Blank Column', 'Always empty'), addrRows[2]);
+        [
+          { key: 'streetAddress', label: 'Street Address', col: 'A', required: true  },
+          { key: 'unit',          label: 'Unit',           col: 'B', required: false },
+        ].forEach(f => c.appendChild(makeDetectedRow(f)));
+        c.appendChild(makeAutoRow('C', 'Blank Column', 'Always empty'));
+        [
+          { key: 'city',  label: 'City',     col: 'D', required: true },
+          { key: 'state', label: 'State',    col: 'E', required: true },
+          { key: 'zip',   label: 'Zip Code', col: 'F', required: true },
+        ].forEach(f => c.appendChild(makeDetectedRow(f)));
       }
 
-      // Contact fields always
-      c.appendChild(makeDivider('Tenant (columns G – J)'));
-      CONTACT_FIELDS.forEach(f => c.appendChild(makeSelectRow(f)));
+      // ── NAME ──────────────────────────────────────────────────────────────
+      c.appendChild(makeDivider('Tenant Name — Columns G – I'));
+      c.appendChild(makeModeTabs(
+        'nameMode',
+        [
+          { value: 'combined', label: 'One combined column',     sub: '"John Doe", "JOHN DOE", or "Doe, John"' },
+          { value: 'separate', label: 'First + Last separately', sub: 'Two distinct columns in the file' },
+        ],
+        detected.nameMode,
+        mode => { detected.nameMode = mode; renderMapFields(); }
+      ));
 
-      // Insert I (full name) before J (email = last field-row)
-      const allRows = Array.from(c.querySelectorAll('.field-row'));
-      c.insertBefore(
-        makeAutoRow('I', 'Full Name', 'Auto-computed: First Name + Last Name'),
-        allRows[allRows.length - 1]
-      );
+      if (detected.nameMode === 'combined') {
+        c.appendChild(makeDetectedRow({ key: 'fullName',  label: 'Full Name',   col: 'G–H', required: true }));
+      } else {
+        c.appendChild(makeDetectedRow({ key: 'firstName', label: 'First Name',  col: 'G',   required: true }));
+        c.appendChild(makeDetectedRow({ key: 'lastName',  label: 'Last Name',   col: 'H',   required: true }));
+      }
+      c.appendChild(makeAutoRow('I', 'Full Name', 'Auto-computed: First + Last'));
+
+      // ── EMAIL ─────────────────────────────────────────────────────────────
+      c.appendChild(makeDivider('Email — Column J (optional)'));
+      c.appendChild(makeDetectedRow({ key: 'email', label: 'Email', col: 'J', required: false }));
     }
 
-    function makeSelectRow(field, placeholder) {
+    function makeDetectedRow(fieldDef) {
+      const det = detected[fieldDef.key] || EMPTY_DET();
+
       const row = document.createElement('div');
       row.className = 'field-row';
 
+      // Label (col 1)
       const lbl = document.createElement('div');
       lbl.className = 'field-label';
-      lbl.innerHTML = `<span class="col-tag">${field.col}</span>${field.label}${field.required ? ' <span class="req">*</span>' : ''}`;
+      lbl.innerHTML = `<span class="col-tag">${fieldDef.col}</span>${fieldDef.label}${fieldDef.required ? ' <span class="req">*</span>' : ''}`;
+
+      // Select + sample (col 2)
+      const center = document.createElement('div');
 
       const sel = document.createElement('select');
-      sel.id = `sel-${field.key}`;
+      sel.id = `sel-${fieldDef.key}`;
 
       const blank = document.createElement('option');
       blank.value = '';
-      blank.textContent = placeholder || (field.required ? '— Select a column —' : '— Leave blank (optional) —');
+      blank.textContent = fieldDef.required ? '— Select a column —' : '— None (leave blank) —';
       sel.appendChild(blank);
 
       headers.forEach(h => {
         const opt = document.createElement('option');
-        opt.value = h;
-        opt.textContent = h;
-        if (autoMatch(h, field.key)) opt.selected = true;
+        opt.value = h; opt.textContent = h;
+        if (det.column === h) opt.selected = true;
         sel.appendChild(opt);
       });
 
+      const sampleDiv = document.createElement('div');
+      sampleDiv.className = 'sample-value';
+      updateSampleDisplay(sampleDiv, fieldDef.key, det.column);
+
+      sel.addEventListener('change', () => {
+        detected[fieldDef.key].column = sel.value || null;
+        updateSampleDisplay(sampleDiv, fieldDef.key, sel.value || null);
+      });
+
+      center.appendChild(sel);
+      center.appendChild(sampleDiv);
+
+      // Confidence badge (col 3)
+      const badge = document.createElement('div');
+      badge.className = `confidence-badge badge-${det.confidence}`;
+      badge.textContent = { high: 'Auto-detected', mid: 'Likely match', low: 'Possible', none: 'Not found' }[det.confidence];
+
       row.appendChild(lbl);
-      row.appendChild(sel);
+      row.appendChild(center);
+      row.appendChild(badge);
       return row;
+    }
+
+    function makeModeTabs(groupKey, options, activeValue, onChange) {
+      const wrap = document.createElement('div');
+      wrap.className = 'mode-tabs';
+      options.forEach(opt => {
+        const tab = document.createElement('div');
+        tab.className = 'mode-tab' + (opt.value === activeValue ? ' active' : '');
+        tab.dataset.value = opt.value;
+        tab.innerHTML = `<strong>${opt.label}</strong><small>${opt.sub}</small>`;
+        tab.addEventListener('click', () => {
+          wrap.querySelectorAll('.mode-tab').forEach(t => t.classList.toggle('active', t.dataset.value === opt.value));
+          onChange(opt.value);
+        });
+        wrap.appendChild(tab);
+      });
+      return wrap;
     }
 
     function makeAutoRow(col, label, desc) {
       const row = document.createElement('div');
-      row.className = 'field-row';
-      row.innerHTML = `<div class="field-label"><span class="col-tag">${col}</span>${label}</div><div class="auto-label">${desc}</div>`;
+      row.className = 'field-row auto-row';
+      row.innerHTML = `<div class="field-label"><span class="col-tag">${col}</span>${label}</div><div class="auto-label">${desc}</div><div></div>`;
       return row;
     }
 
-    function makeDivider(text) {
+    function makeDivider(text, noTop = false) {
       const d = document.createElement('div');
-      d.className = 'section-divider';
+      d.className = 'section-divider' + (noTop ? ' no-top' : '');
       d.textContent = text;
       return d;
     }
 
-    function autoMatch(header, key) {
-      const h = header.toLowerCase().replace(/[_\-]/g, ' ');
-      return (HINTS[key] || []).some(hint => h.includes(hint));
+    function updateSampleDisplay(div, fieldKey, colName) {
+      if (!colName) { div.textContent = ''; return; }
+      const raw = getSamples(colName, 1)[0] || '';
+      if (!raw) { div.textContent = ''; return; }
+
+      if (fieldKey === 'addressColumn') {
+        const p = parseAddress(raw);
+        const parts = [
+          p.street ? `Street: <b>${p.street}</b>` : null,
+          p.unit   ? `Unit: <b>${p.unit}</b>`     : null,
+          p.city   ? `City: <b>${p.city}</b>`     : null,
+          p.state  ? `State: <b>${p.state}</b>`   : null,
+          p.zip    ? `Zip: <b>${p.zip}</b>`       : null,
+        ].filter(Boolean);
+        div.innerHTML = parts.length ? parts.join(' · ') : `"${raw}"`;
+      } else if (fieldKey === 'fullName') {
+        const p = parseName(raw);
+        div.innerHTML = `"${raw}" → First: <b>${p.first || '?'}</b>  Last: <b>${p.last || '?'}</b>`;
+      } else {
+        div.innerHTML = `"${raw}"`;
+      }
     }
 
     // ── Address parsing ───────────────────────────────────────────────────────
@@ -485,17 +659,13 @@
       if (!combined) return { street: '', unit: '', city: '', state: '', zip: '' };
 
       const parts = combined.split(',').map(p => p.trim()).filter(Boolean);
-
-      // Need at least: street, city, state, zip
-      if (parts.length < 4) {
-        return { street: combined.trim(), unit: '', city: '', state: '', zip: '' };
-      }
+      if (parts.length < 4) return { street: combined.trim(), unit: '', city: '', state: '', zip: '' };
 
       const zip    = parts.pop();
       const state  = parts.pop();
       const city   = parts.pop();
       const street = parts.shift();
-      const unit   = parts.join(', ');   // anything left between street and city
+      const unit   = parts.join(', ');   // anything between street and city
 
       return { street, unit, city, state, zip };
     }
@@ -504,9 +674,7 @@
 
     function normalizeZip(z) {
       const s = String(z).trim();
-      // Excel sometimes strips leading zero from 5-digit zip stored as number
-      if (/^\d{4}$/.test(s)) return '0' + s;
-      return s;
+      return /^\d{4}$/.test(s) ? '0' + s : s;   // Excel strips leading zero
     }
 
     function validateState(s) { return US_STATES.has(s.toUpperCase()); }
@@ -518,71 +686,75 @@
       clearErr('err-map');
       const mapping = getMapping();
       if (!mapping) return;
-
       outputData = rows.map(row => buildRow(row, mapping));
       renderPreview();
       toStep(3);
     });
 
     function getMapping() {
-      const m = {};
+      const m = { addrMode: detected.addrMode, nameMode: detected.nameMode };
 
-      if (addrMode === 'combined') {
-        const v = document.getElementById('sel-addressColumn').value;
-        if (!v) { showErr('err-map', '"Combined Address" is required — please select the column that contains the full address.'); return null; }
+      if (detected.addrMode === 'combined') {
+        const v = document.getElementById('sel-addressColumn')?.value;
+        if (!v) { showErr('err-map', 'Please select the "Combined Address" column.'); return null; }
         m.addressColumn = v;
       } else {
-        for (const f of ADDR_FIELDS) {
-          const v = document.getElementById(`sel-${f.key}`).value;
-          if (f.required && !v) { showErr('err-map', `"${f.label}" is required — please select a column for it.`); return null; }
-          m[f.key] = v;
+        for (const [key, label, req] of [
+          ['streetAddress','Street Address',true], ['unit','Unit',false],
+          ['city','City',true], ['state','State',true], ['zip','Zip Code',true]
+        ]) {
+          const v = document.getElementById(`sel-${key}`)?.value || '';
+          if (req && !v) { showErr('err-map', `"${label}" is required — please select a column.`); return null; }
+          m[key] = v;
         }
       }
 
-      for (const f of CONTACT_FIELDS) {
-        const v = document.getElementById(`sel-${f.key}`).value;
-        if (f.required && !v) { showErr('err-map', `"${f.label}" is required — please select a column for it.`); return null; }
-        m[f.key] = v;
+      if (detected.nameMode === 'combined') {
+        const v = document.getElementById('sel-fullName')?.value;
+        if (!v) { showErr('err-map', 'Please select the "Full Name" column.'); return null; }
+        m.fullName = v;
+      } else {
+        const fn = document.getElementById('sel-firstName')?.value;
+        const ln = document.getElementById('sel-lastName')?.value;
+        if (!fn) { showErr('err-map', '"First Name" column is required.'); return null; }
+        if (!ln) { showErr('err-map', '"Last Name" column is required.');  return null; }
+        m.firstName = fn; m.lastName = ln;
       }
 
+      m.email = document.getElementById('sel-email')?.value || '';
       return m;
     }
 
     function buildRow(row, m) {
       let street, unit, city, state, zip;
 
-      if (addrMode === 'combined') {
-        const parsed = parseAddress(val(row, m.addressColumn));
-        street = parsed.street;
-        unit   = parsed.unit;
-        city   = parsed.city;
-        state  = parsed.state;
-        zip    = parsed.zip;
+      if (m.addrMode === 'combined') {
+        const p = parseAddress(val(row, m.addressColumn));
+        street = p.street; unit = p.unit; city = p.city; state = p.state; zip = p.zip;
       } else {
-        street = val(row, m.streetAddress);
-        unit   = val(row, m.unit);
-        city   = val(row, m.city);
-        state  = val(row, m.state);
+        street = val(row, m.streetAddress); unit  = val(row, m.unit);
+        city   = val(row, m.city);          state = val(row, m.state);
         zip    = val(row, m.zip);
       }
 
       state = state.toUpperCase().trim();
       zip   = normalizeZip(zip);
 
-      const first = val(row, m.firstName);
-      const last  = val(row, m.lastName);
+      let first, last;
+      if (m.nameMode === 'combined') {
+        const p = parseName(val(row, m.fullName));
+        first = p.first; last = p.last;
+      } else {
+        first = toTitleCase(val(row, m.firstName));
+        last  = toTitleCase(val(row, m.lastName));
+      }
 
       return [
-        street,
-        unit,
-        '',                                        // C — blank
-        city,
-        state,                                     // E
-        zip,                                       // F
-        first,
-        last,
-        [first, last].filter(Boolean).join(' '),  // I — full name
-        val(row, m.email),
+        street, unit, '',        // A, B, C
+        city, state, zip,        // D, E, F
+        first, last,             // G, H
+        [first, last].filter(Boolean).join(' '),  // I
+        val(row, m.email),       // J
       ];
     }
 
@@ -593,17 +765,10 @@
     function renderPreview() {
       document.getElementById('row-badge').textContent = `${outputData.length.toLocaleString()} rows`;
 
-      // Validate state (col 4) and zip (col 5)
       const issues = outputData.map((cells, idx) => ({
-        row: idx + 2,                           // 1-based + header
-        state: !validateState(cells[4]),
-        zip:   !validateZip(cells[5]),
+        row: idx + 2, state: !validateState(cells[4]), zip: !validateZip(cells[5])
       }));
 
-      const badState = issues.filter(i => i.state);
-      const badZip   = issues.filter(i => i.zip);
-
-      // Build table
       const tbl = document.getElementById('preview-tbl');
       tbl.innerHTML = '';
 
@@ -617,53 +782,50 @@
       });
 
       const tbody = tbl.createTBody();
-      outputData.slice(0, 10).forEach((cells, rowIdx) => {
+      outputData.slice(0, 10).forEach((cells, ri) => {
         const tr = tbody.insertRow();
         cells.forEach((cell, i) => {
           const td = tr.insertCell();
           td.textContent = cell || '';
           if (i === 2) { td.className = 'td-blank'; return; }
           if (i === 8) { td.className = 'td-auto';  return; }
-          if (i === 4 && issues[rowIdx].state) td.classList.add('td-invalid');
-          if (i === 5 && issues[rowIdx].zip)   td.classList.add('td-invalid');
+          if (i === 4 && issues[ri].state) td.classList.add('td-invalid');
+          if (i === 5 && issues[ri].zip)   td.classList.add('td-invalid');
         });
       });
 
-      // Validation summary
+      const badState = issues.filter(i => i.state);
+      const badZip   = issues.filter(i => i.zip);
       const vr = document.getElementById('val-result');
-      if (badState.length === 0 && badZip.length === 0) {
+
+      if (!badState.length && !badZip.length) {
         vr.innerHTML = `<div class="val-ok">✓ All states and zip codes look valid.</div>`;
       } else {
-        const lines = [];
+        const li = [];
         if (badState.length) {
-          const sample = badState.slice(0, 5).map(i => `row ${i.row}`).join(', ');
-          lines.push(`<li><strong>${badState.length} invalid state${badState.length > 1 ? 's' : ''}</strong> — not a recognized 2-letter US state code (${sample}${badState.length > 5 ? ', …' : ''})</li>`);
+          const s = badState.slice(0,5).map(i=>`row ${i.row}`).join(', ');
+          li.push(`<li><strong>${badState.length} invalid state${badState.length>1?'s':''}</strong> — not a recognised US state code (${s}${badState.length>5?', …':''})</li>`);
         }
         if (badZip.length) {
-          const sample = badZip.slice(0, 5).map(i => `row ${i.row}`).join(', ');
-          lines.push(`<li><strong>${badZip.length} invalid zip code${badZip.length > 1 ? 's' : ''}</strong> — must be 5 digits or 5-4 format (${sample}${badZip.length > 5 ? ', …' : ''})</li>`);
+          const s = badZip.slice(0,5).map(i=>`row ${i.row}`).join(', ');
+          li.push(`<li><strong>${badZip.length} invalid zip${badZip.length>1?' codes':' code'}</strong> — must be 5 digits or 5-4 format (${s}${badZip.length>5?', …':''})</li>`);
         }
-        vr.innerHTML = `
-          <div class="val-warn">
-            <div>
-              ⚠ <strong>${badState.length + badZip.length} validation issue${badState.length + badZip.length > 1 ? 's' : ''} found</strong> — invalid cells are highlighted in red above.
-              <ul>${lines.join('')}</ul>
-            </div>
-          </div>`;
+        vr.innerHTML = `<div class="val-warn">⚠ <strong>${badState.length+badZip.length} validation issue${badState.length+badZip.length>1?'s':''}</strong> — invalid cells highlighted above.<ul>${li.join('')}</ul></div>`;
       }
     }
 
     // ── Download ──────────────────────────────────────────────────────────────
 
     document.getElementById('btn-dl').addEventListener('click', () => {
-      const lines = [OUT_HEADERS, ...outputData].map(row =>
+      const csv = [OUT_HEADERS, ...outputData].map(row =>
         row.map(cell => {
           const s = String(cell);
           return (s.includes(',') || s.includes('"') || s.includes('\n'))
-            ? `"${s.replace(/"/g, '""')}"` : s;
+            ? `"${s.replace(/"/g,'""')}"` : s;
         }).join(',')
-      );
-      const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      ).join('\n');
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url  = URL.createObjectURL(blob);
       Object.assign(document.createElement('a'), { href: url, download: 'tenants_formatted.csv' }).click();
       URL.revokeObjectURL(url);
