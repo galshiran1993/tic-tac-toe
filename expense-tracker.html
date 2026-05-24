@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #1a1a2e; color: #eee;
+      min-height: 100vh; padding: 36px 20px 80px;
+    }
+
+    h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: 2px; color: #e94560; text-align: center; margin-bottom: 28px; }
+
+    /* ── Balance bar ────────────────────────────────────────────── */
+    .bal-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 14px; max-width: 780px; margin: 0 auto 14px;
+    }
+    .bal-card {
+      background: #16213e; border: 1px solid #0f3460;
+      border-radius: 14px; padding: 18px; text-align: center;
+    }
+    .bal-card .lbl {
+      font-size: .67rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #3a4a6a; margin-bottom: 8px;
+    }
+    .bal-card .val { font-size: 1.55rem; font-weight: 700; }
+    .c-green .val { color: #4ecca3; }
+    .c-red   .val { color: #e94560; }
+    .c-amber .val { color: #ffc050; }
+
+    /* ── Progress bar ───────────────────────────────────────────── */
+    .prog-wrap {
+      max-width: 780px; margin: 0 auto 8px;
+      height: 8px; background: #0f3460; border-radius: 6px; overflow: hidden;
+    }
+    .prog-fill { height: 100%; border-radius: 6px; transition: width .5s, background .5s; }
+    .bal-link {
+      display: block; text-align: center; font-size: .73rem;
+      color: #3a4a6a; text-decoration: underline; cursor: pointer;
+      margin: 8px auto 24px; max-width: 780px;
+    }
+    .bal-link:hover { color: #a8b2d8; }
+
+    /* ── Reminder banner ────────────────────────────────────────── */
+    .reminder {
+      max-width: 780px; margin: 0 auto 18px;
+      padding: 12px 16px; border-radius: 10px; font-size: .83rem;
+      color: #ffc050; display: flex; align-items: center; gap: 8px;
+      background: rgba(255,192,80,.07); border: 1px solid rgba(255,192,80,.28);
+    }
+
+    /* ── Card ───────────────────────────────────────────────────── */
+    .card {
+      background: #16213e; border: 1px solid #0f3460;
+      border-radius: 16px; padding: 26px;
+      max-width: 780px; margin: 0 auto 18px;
+    }
+    .card-title {
+      font-size: .72rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: #e94560; margin-bottom: 18px;
+    }
+
+    /* ── Form ───────────────────────────────────────────────────── */
+    .f-row { display: grid; gap: 12px; margin-bottom: 12px; }
+    .f-row.col2           { grid-template-columns: 1fr 1fr; }
+    .f-row.col-desc-amt   { grid-template-columns: 1fr 150px; }
+    .f-lbl {
+      font-size: .7rem; font-weight: 700; letter-spacing: .8px;
+      text-transform: uppercase; color: #3a4a6a; margin-bottom: 5px;
+    }
+    input, select {
+      width: 100%; background: #1a1a2e; border: 1px solid #0f3460;
+      color: #eee; padding: 9px 12px; border-radius: 8px;
+      font-size: .87rem; transition: border-color .15s;
+    }
+    input:focus, select:focus { outline: none; border-color: #e94560; }
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23a8b2d8' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 11px center; padding-right: 32px;
+    }
+    select option { background: #1a1a2e; }
+    .btn {
+      padding: 10px 22px; font-size: .87rem; font-weight: 600;
+      border-radius: 8px; cursor: pointer; border: none;
+      transition: all .15s; letter-spacing: .3px;
+    }
+    .btn-primary { background: #e94560; color: #fff; }
+    .btn-primary:hover { background: #c73652; }
+    .btn-ghost {
+      background: none; border: 1px solid #0f3460; color: #a8b2d8;
+      padding: 9px 18px; font-size: .85rem; font-weight: 600;
+      border-radius: 8px; cursor: pointer; transition: all .15s;
+    }
+    .btn-ghost:hover { border-color: #a8b2d8; color: #eee; }
+    .btn-row { display: flex; justify-content: flex-end; margin-top: 4px; }
+    .err { color: #e94560; font-size: .8rem; margin-top: 8px; min-height: 1.1em; }
+
+    /* ── Expense log ────────────────────────────────────────────── */
+    .day-hdr {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .7rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #3a4a6a;
+      padding: 14px 0 8px; border-top: 1px solid rgba(15,52,96,.5);
+    }
+    .day-hdr.first { border-top: none; }
+    .day-total { color: #a8b2d8; font-size: .78rem; font-weight: 600; }
+    .exp-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 9px 0; border-bottom: 1px solid rgba(15,52,96,.35);
+    }
+    .exp-row:last-child { border-bottom: none; }
+    .cat-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .exp-meta { flex: 1; min-width: 0; }
+    .exp-desc { font-size: .88rem; color: #cdd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .exp-cat  { font-size: .69rem; color: #3a4a6a; text-transform: uppercase; letter-spacing: .5px; margin-top: 2px; }
+    .exp-amt  { font-size: .92rem; font-weight: 700; color: #e94560; white-space: nowrap; }
+    .btn-del  {
+      background: none; border: none; color: #2a3a5a; cursor: pointer;
+      font-size: .78rem; padding: 4px 6px; border-radius: 4px; transition: color .15s; flex-shrink: 0;
+    }
+    .btn-del:hover { color: #e94560; }
+    .empty-state { text-align: center; color: #3a4a6a; font-size: .87rem; padding: 32px 0; }
+
+    /* ── Suggestion ─────────────────────────────────────────────── */
+    .sug-card {
+      max-width: 780px; margin: 0 auto 20px;
+      border-radius: 16px; padding: 26px;
+    }
+    .sug-card.excellent { background: rgba(78,204,163,.07);  border: 1px solid rgba(78,204,163,.25); }
+    .sug-card.good      { background: rgba(78,204,163,.05);  border: 1px solid rgba(78,204,163,.18); }
+    .sug-card.moderate  { background: rgba(255,192,80,.05);  border: 1px solid rgba(255,192,80,.22); }
+    .sug-card.caution   { background: rgba(233,100,60,.05);  border: 1px solid rgba(233,100,60,.22); }
+    .sug-card.danger    { background: rgba(233,69,96,.10);   border: 1px solid rgba(233,69,96,.38); }
+    .sug-title { font-size: .72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+    .excellent .sug-title, .good .sug-title { color: #4ecca3; }
+    .moderate  .sug-title { color: #ffc050; }
+    .caution   .sug-title { color: #ff9060; }
+    .danger    .sug-title { color: #e94560; }
+    .sug-summary { font-size: .9rem; color: #cdd; margin-bottom: 16px; line-height: 1.6; }
+    .sug-summary b { color: #eee; }
+    .sug-items { display: flex; flex-direction: column; gap: 9px; }
+    .sug-item  { display: flex; gap: 10px; font-size: .85rem; color: #a8b2d8; line-height: 1.5; }
+    .sug-item .arr { flex-shrink: 0; color: #3a4a6a; }
+    .sug-item b { color: #eee; }
+
+    /* ── Modal ──────────────────────────────────────────────────── */
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.72);
+      display: flex; align-items: center; justify-content: center; z-index: 100;
+    }
+    .modal-box {
+      background: #16213e; border: 1px solid #0f3460;
+      border-radius: 16px; padding: 34px; max-width: 400px; width: 90%;
+    }
+    .modal-box h2 { font-size: 1.25rem; color: #e94560; margin-bottom: 8px; }
+    .modal-box p  { font-size: .85rem; color: #a8b2d8; margin-bottom: 22px; line-height: 1.55; }
+    .modal-btns   { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- First-time setup modal -->
+  <div class="overlay" id="setup-overlay">
+    <div class="modal-box">
+      <h2>Welcome 👋</h2>
+      <p>Enter your current bank balance to get started. You can update it anytime — for example when your salary arrives.</p>
+      <div class="f-lbl">Current bank balance ($)</div>
+      <input type="number" id="setup-input" placeholder="e.g. 5000" min="0" step="0.01">
+      <div class="err" id="setup-err"></div>
+      <div class="modal-btns">
+        <button class="btn btn-primary" id="setup-ok">Get Started →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Update balance modal -->
+  <div class="overlay hidden" id="update-overlay">
+    <div class="modal-box">
+      <h2>Update Balance</h2>
+      <p>Enter your new actual bank balance (e.g. after your salary arrives). Your expense history will be cleared so the tracker starts fresh from this amount.</p>
+      <div class="f-lbl">New bank balance ($)</div>
+      <input type="number" id="update-input" placeholder="e.g. 5000" min="0" step="0.01">
+      <div class="err" id="update-err"></div>
+      <div class="modal-btns">
+        <button class="btn-ghost" id="update-cancel">Cancel</button>
+        <button class="btn btn-primary" id="update-ok">Update →</button>
+      </div>
+    </div>
+  </div>
+
+  <h1>EXPENSE TRACKER</h1>
+
+  <!-- Daily reminder (shown if no expenses logged today) -->
+  <div class="reminder hidden" id="reminder">
+    ⏰ You haven't logged any expenses today — don't forget to update!
+  </div>
+
+  <!-- Balance summary -->
+  <div class="bal-grid">
+    <div class="bal-card c-green">
+      <div class="lbl">Balance Left</div>
+      <div class="val" id="v-remaining">$0</div>
+    </div>
+    <div class="bal-card c-red">
+      <div class="lbl">Total Spent</div>
+      <div class="val" id="v-spent">$0</div>
+    </div>
+    <div class="bal-card c-amber">
+      <div class="lbl">Remaining</div>
+      <div class="val" id="v-pct">—</div>
+    </div>
+  </div>
+
+  <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  <a class="bal-link" id="bal-edit-link">⚙ Update starting balance</a>
+
+  <!-- Add expense form -->
+  <div class="card">
+    <div class="card-title">Add Expense</div>
+    <div class="f-row col2">
+      <div>
+        <div class="f-lbl">Date</div>
+        <input type="date" id="exp-date">
+      </div>
+      <div>
+        <div class="f-lbl">Category</div>
+        <select id="exp-cat">
+          <option value="food">🍔 Food & Dining</option>
+          <option value="transport">🚗 Transport</option>
+          <option value="shopping">🛍 Shopping</option>
+          <option value="bills">💡 Bills & Utilities</option>
+          <option value="health">❤️ Health</option>
+          <option value="entertainment">🎮 Entertainment</option>
+          <option value="other">📦 Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="f-row col-desc-amt">
+      <div>
+        <div class="f-lbl">Description</div>
+        <input type="text" id="exp-desc" placeholder="e.g. Grocery run">
+      </div>
+      <div>
+        <div class="f-lbl">Amount ($)</div>
+        <input type="number" id="exp-amt" placeholder="0.00" min="0" step="0.01">
+      </div>
+    </div>
+    <div class="err" id="exp-err"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="exp-add">+ Add Expense</button>
+    </div>
+  </div>
+
+  <!-- Expense log -->
+  <div class="card">
+    <div class="card-title">Expense Log</div>
+    <div id="log-list"></div>
+  </div>
+
+  <!-- Investment / savings suggestion -->
+  <div id="sug-wrap"></div>
+
+<script>
+  // ── Constants ──────────────────────────────────────────────────────────────
+  const CAT_COLOR = {
+    food: '#e94560', transport: '#4ecca3', shopping: '#ffc050',
+    bills: '#a78bfa', health: '#60d9fa', entertainment: '#f97316', other: '#a8b2d8',
+  };
+  const CAT_LABEL = {
+    food: 'Food & Dining', transport: 'Transport', shopping: 'Shopping',
+    bills: 'Bills & Utilities', health: 'Health', entertainment: 'Entertainment', other: 'Other',
+  };
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  let startBalance = null;
+  let expenses     = [];
+
+  function persist() {
+    localStorage.setItem('et_balance',  startBalance);
+    localStorage.setItem('et_expenses', JSON.stringify(expenses));
+  }
+
+  function loadState() {
+    const b = localStorage.getItem('et_balance');
+    startBalance = b !== null ? parseFloat(b) : null;
+    const e = localStorage.getItem('et_expenses');
+    expenses = e ? JSON.parse(e) : [];
+  }
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
+  const fmt   = n => '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const today = () => new Date().toISOString().slice(0, 10);
+
+  function fmtDate(iso) {
+    if (iso === today()) return 'Today';
+    const yest = new Date(); yest.setDate(yest.getDate() - 1);
+    if (iso === yest.toISOString().slice(0, 10)) return 'Yesterday';
+    return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  const totalSpent = () => expenses.reduce((s, e) => s + e.amount, 0);
+  const remaining  = () => startBalance - totalSpent();
+
+  // ── Render ─────────────────────────────────────────────────────────────────
+  function render() {
+    if (startBalance === null) return;
+
+    const rem  = remaining();
+    const spent = totalSpent();
+    const pct  = startBalance > 0 ? Math.max(0, rem / startBalance * 100) : 0;
+
+    document.getElementById('v-remaining').textContent = fmt(rem);
+    document.getElementById('v-spent').textContent     = fmt(spent);
+    document.getElementById('v-pct').textContent       = pct.toFixed(1) + '%';
+
+    const fill = document.getElementById('prog-fill');
+    fill.style.width      = Math.min(100, pct).toFixed(1) + '%';
+    fill.style.background = pct > 50 ? '#4ecca3' : pct > 20 ? '#ffc050' : '#e94560';
+
+    renderReminder();
+    renderLog();
+    renderSuggestion(rem, pct);
+  }
+
+  function renderReminder() {
+    const hasToday = expenses.some(e => e.date === today());
+    document.getElementById('reminder').classList.toggle('hidden', hasToday);
+  }
+
+  function renderLog() {
+    const list = document.getElementById('log-list');
+
+    if (!expenses.length) {
+      list.innerHTML = '<div class="empty-state">No expenses yet — add your first one above.</div>';
+      return;
+    }
+
+    // Group by date, newest first
+    const groups = {};
+    expenses.forEach(e => { (groups[e.date] = groups[e.date] || []).push(e); });
+    const dates = Object.keys(groups).sort((a, b) => b.localeCompare(a));
+
+    list.innerHTML = '';
+    dates.forEach((date, di) => {
+      const dayTotal = groups[date].reduce((s, e) => s + e.amount, 0);
+
+      const hdr = document.createElement('div');
+      hdr.className = 'day-hdr' + (di === 0 ? ' first' : '');
+      hdr.innerHTML = `<span>${fmtDate(date)}</span><span class="day-total">−${fmt(dayTotal)}</span>`;
+      list.appendChild(hdr);
+
+      groups[date].slice().sort((a, b) => b.id - a.id).forEach(exp => {
+        const row = document.createElement('div');
+        row.className = 'exp-row';
+        row.innerHTML = `
+          <div class="cat-dot" style="background:${CAT_COLOR[exp.cat] || '#a8b2d8'}"></div>
+          <div class="exp-meta">
+            <div class="exp-desc">${escHtml(exp.desc || '—')}</div>
+            <div class="exp-cat">${CAT_LABEL[exp.cat] || exp.cat}</div>
+          </div>
+          <div class="exp-amt">−${fmt(exp.amount)}</div>
+          <button class="btn-del" data-id="${exp.id}" title="Delete">✕</button>
+        `;
+        list.appendChild(row);
+      });
+    });
+
+    list.querySelectorAll('.btn-del').forEach(btn => {
+      btn.addEventListener('click', () => {
+        expenses = expenses.filter(e => e.id !== +btn.dataset.id);
+        persist(); render();
+      });
+    });
+  }
+
+  function renderSuggestion(rem, pct) {
+    const wrap = document.getElementById('sug-wrap');
+    if (startBalance === null || startBalance === 0) { wrap.innerHTML = ''; return; }
+
+    let tier, title, summary, items;
+    const $ = fmt;
+
+    if (pct >= 60) {
+      tier    = 'excellent';
+      title   = '💚 Your finances look healthy';
+      const save = rem * 0.20, invest = rem * 0.15, keep = rem - save - invest;
+      summary = `You have <b>${$(rem)}</b> left — <b>${pct.toFixed(0)}%</b> of your starting balance. Great position to put money to work.`;
+      items   = [
+        `Move <b>${$(save)}</b> to a savings account to build your emergency fund (aim for 3–6 months of expenses).`,
+        `Put <b>${$(invest)}</b> into a low-cost index fund (e.g. an S&P 500 ETF) — let it grow passively.`,
+        `Keep <b>${$(keep)}</b> accessible for upcoming expenses.`,
+      ];
+    } else if (pct >= 40) {
+      tier    = 'good';
+      title   = '🟢 Solid position';
+      const save = rem * 0.20, invest = rem * 0.10, keep = rem - save - invest;
+      summary = `You have <b>${$(rem)}</b> left — <b>${pct.toFixed(0)}%</b> of your starting balance. You're doing well.`;
+      items   = [
+        `Move <b>${$(save)}</b> (20%) to savings — this is your safety net.`,
+        `Consider investing <b>${$(invest)}</b> (10%) in an index fund once your emergency fund is solid.`,
+        `Keep <b>${$(keep)}</b> (70%) liquid for the rest of the month.`,
+      ];
+    } else if (pct >= 20) {
+      tier    = 'moderate';
+      title   = '🟡 Keep an eye on spending';
+      const save = rem * 0.15, keep = rem - save;
+      summary = `You have <b>${$(rem)}</b> left — <b>${pct.toFixed(0)}%</b> of your starting balance. Be a bit careful with discretionary spending.`;
+      items   = [
+        `Set aside <b>${$(save)}</b> (15%) as a small buffer before spending more.`,
+        `Hold off on new investments until your balance recovers above 40%.`,
+        `Focus the remaining <b>${$(keep)}</b> on essentials only.`,
+      ];
+    } else if (pct >= 5) {
+      tier    = 'caution';
+      title   = '🟠 Running low';
+      summary = `You have <b>${$(rem)}</b> left — only <b>${pct.toFixed(0)}%</b> of your starting balance. Time to cut back.`;
+      items   = [
+        `Pause all non-essential spending (dining out, shopping, entertainment).`,
+        `Review your expense log above — identify anything you can avoid this week.`,
+        `Skip investments for now. Focus on getting through to your next income.`,
+      ];
+    } else {
+      tier    = 'danger';
+      title   = '🔴 Critical — spend only on essentials';
+      summary = `You have <b>${$(rem)}</b> left — <b>${pct.toFixed(0)}%</b> of your starting balance. Spend only on absolute necessities.`;
+      items   = [
+        `Stop all discretionary spending immediately.`,
+        `Review subscriptions and recurring charges — cancel anything non-essential.`,
+        `When your next income arrives, update your balance above to reset the tracker.`,
+      ];
+    }
+
+    wrap.innerHTML = `
+      <div class="sug-card ${tier}">
+        <div class="sug-title">${title}</div>
+        <div class="sug-summary">${summary}</div>
+        <div class="sug-items">
+          ${items.map(i => `<div class="sug-item"><span class="arr">→</span><span>${i}</span></div>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  // ── Add expense ────────────────────────────────────────────────────────────
+  document.getElementById('exp-date').value = today();
+
+  document.getElementById('exp-add').addEventListener('click', () => {
+    const date   = document.getElementById('exp-date').value;
+    const cat    = document.getElementById('exp-cat').value;
+    const desc   = document.getElementById('exp-desc').value.trim();
+    const amtRaw = document.getElementById('exp-amt').value;
+    const amt    = parseFloat(amtRaw);
+    const errEl  = document.getElementById('exp-err');
+
+    if (!date)                        { errEl.textContent = 'Please select a date.'; return; }
+    if (!amtRaw || isNaN(amt) || amt <= 0) { errEl.textContent = 'Please enter a valid amount greater than $0.'; return; }
+    errEl.textContent = '';
+
+    expenses.push({ id: Date.now(), date, cat, desc, amount: amt });
+    persist();
+
+    document.getElementById('exp-desc').value = '';
+    document.getElementById('exp-amt').value  = '';
+    document.getElementById('exp-date').value = today();
+    render();
+  });
+
+  // Allow pressing Enter in the amount field to submit
+  document.getElementById('exp-amt').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('exp-add').click();
+  });
+
+  // ── Setup modal ────────────────────────────────────────────────────────────
+  document.getElementById('setup-ok').addEventListener('click', () => {
+    const v = parseFloat(document.getElementById('setup-input').value);
+    if (isNaN(v) || v < 0) { document.getElementById('setup-err').textContent = 'Please enter a valid amount (0 or more).'; return; }
+    startBalance = v;
+    persist();
+    document.getElementById('setup-overlay').classList.add('hidden');
+    render();
+  });
+
+  document.getElementById('setup-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('setup-ok').click();
+  });
+
+  // ── Update balance modal ───────────────────────────────────────────────────
+  document.getElementById('bal-edit-link').addEventListener('click', () => {
+    document.getElementById('update-input').value = startBalance ?? '';
+    document.getElementById('update-err').textContent = '';
+    document.getElementById('update-overlay').classList.remove('hidden');
+    document.getElementById('update-input').focus();
+  });
+
+  document.getElementById('update-cancel').addEventListener('click', () => {
+    document.getElementById('update-overlay').classList.add('hidden');
+  });
+
+  document.getElementById('update-ok').addEventListener('click', () => {
+    const v = parseFloat(document.getElementById('update-input').value);
+    if (isNaN(v) || v < 0) { document.getElementById('update-err').textContent = 'Please enter a valid amount.'; return; }
+    startBalance = v;
+    expenses = [];
+    persist();
+    document.getElementById('update-overlay').classList.add('hidden');
+    render();
+  });
+
+  document.getElementById('update-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('update-ok').click();
+  });
+
+  // ── Boot ───────────────────────────────────────────────────────────────────
+  loadState();
+  if (startBalance === null) {
+    document.getElementById('setup-overlay').classList.remove('hidden');
+  } else {
+    document.getElementById('setup-overlay').classList.add('hidden');
+    render();
+  }
+</script>
+</body>
+</html>
