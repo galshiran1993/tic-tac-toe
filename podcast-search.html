@@ -257,18 +257,114 @@ const EPISODES = [
   [1, "האישה ששכחה הכל", "נובמבר 2021", "אובדן זיכרון ואמנזיה — הפרעות זיכרון אוטוביוגרפיות, מי אנחנו בלי הזיכרונות שלנו, זהות וזיכרון, מקרים של אמנזיה כוללת."],
 ];
 
-function makeSlug(title) {
-  const cleaned = title
-    .replace(/[—–,?!'".()\[\]\/׳״]/g, ' ')
-    .replace(/-/g, ' ')
-    .trim()
-    .replace(/\s+/g, '-');
-  const full = cleaned + '-עושים-פסיכולוגיה';
-  return [...full].slice(0, 37).join('');
-}
+const EP_URLS = {
+  106: 'https://osimhistoria.com/podcast/הגבר-המיני-כשציפייה-פוגשת-מציאות-עושי/',
+  105: 'https://osimhistoria.com/podcast/להיות-גבר-בישראל-זהות-אבהות-ולוחמה-עו/',
+  104: 'https://osimhistoria.com/podcast/לא-רק-תנועות-עיניים-emdr-עושים-פסיכולוגיה/',
+  103: 'https://osimhistoria.com/podcast/המכורים-המתפקדים-האם-כולנו-מכורים-לקנ/',
+  102: 'https://osimhistoria.com/podcast/דימוי-גוף-הזוגיות-שלנו-עם-עצמנו-עושים/',
+  101: 'https://osimhistoria.com/podcast/חוסן-נפשי-אחרי-מלחמה-פוסט-טראומה-ופסיכ/',
+  100: 'https://osimhistoria.com/podcast/הקול-בראש-על-הדיבור-הפנימי-שלנו-עושים/',
+  99:  'https://osimhistoria.com/podcast/מאונדה-עד-פרו-טקסי-איוואסקה-פסיכדלים/',
+  98:  'https://osimhistoria.com/podcast/זה-לא-חייב-לכאוב-כאב-כרוני-עושים-פסיכו/',
+  97:  'https://osimhistoria.com/podcast/מוזיקה-ללב-היא-חודרת-ואם-שרתם-תלחצו-פלי/',
+  96:  'https://osimhistoria.com/podcast/איך-באמת-משנים-הרגלים-עושים-פסיכולוגי/',
+  95:  'https://osimhistoria.com/podcast/לצאת-מהגיהנום-הרגשי-טיפול-dbt-עושים-פסיכ/',
+  94:  'https://osimhistoria.com/podcast/עובד-מחפש-משמעות-עושים-פסיכולוגיה/',
+  93:  'https://osimhistoria.com/podcast/הגלילה-האינסופית-ההתמכרות-לטכנולוגי/',
+  92:  'https://osimhistoria.com/podcast/סוד-ההצלחה-עושים-פסיכולוגיה/',
+  91:  'https://osimhistoria.com/podcast/מישהו-מקשיב-לי-שומע-אותי-עושים-פסיכולו/',
+  90:  'https://osimhistoria.com/podcast/כולנו-צריכים-טיפול-עושים-פסיכולוגיה/',
+  89:  'https://osimhistoria.com/podcast/ילדים-זה-שמחה-על-אל-הורות-עושים-פסיכול/',
+  88:  'https://osimhistoria.com/podcast/תאי-לחץ-לחדש-את-המוח-עושים-פסיכולוגיה/',
+  87:  'https://osimhistoria.com/podcast/חרדה-לפרק-גולם-וליצור-פרפר-עושים-פסיכו/',
+  86:  'https://osimhistoria.com/podcast/המוח-של-איינשטיין-אינטליגנציה-סביבה-ו/',
+  85:  'https://osimhistoria.com/podcast/מבחני-אינטיליגנציה-המקרה-של-דריל-לסטר/',
+  84:  'https://osimhistoria.com/podcast/להיות-בלשי-אהבה-איך-מתקשרים-בזוגיות-ע/',
+  83:  'https://osimhistoria.com/podcast/כדור-הארץ-שטוח-פסיכולוגיה-קונספרטיבי/',
+  82:  'https://osimhistoria.com/podcast/דרך-המסך-טיפול-אינטרנטי-עושים-פסיכולו/',
+  81:  'https://osimhistoria.com/podcast/כוחה-של-קבוצה-אנליזה-קבוצתית-עושים-פסי/',
+  80:  'https://osimhistoria.com/podcast/הפסיכולוגיה-של-ההגשמה-העצמית-איך-בוחר/',
+  79:  'https://osimhistoria.com/podcast/אכילה-רגשית-ממחר-דיאטה-עושים-פסיכולוג/',
+  78:  'https://osimhistoria.com/podcast/אחים-יחסי-אהבה-שנאה-עושים-פסיכולוגיה/',
+  77:  'https://osimhistoria.com/podcast/איך-בגדים-משפיעים-עלינו-הפסיכולוגיה-ש/',
+  76:  'https://osimhistoria.com/podcast/אני-מרגיש-משמע-אני-קיים-עושים-פסיכולוג/',
+  75:  'https://osimhistoria.com/podcast/איך-אנחנו-תופסים-את-העולם-עושים-פסיכול/',
+  74:  'https://osimhistoria.com/podcast/כל-העיניים-אליי-חרדה-חברתית-עושים-פסיכ/',
+  73:  'https://osimhistoria.com/podcast/משעמם-לי-וזה-בלתי-נסבל-למה-חשוב-להשתעמם/',
+  72:  'https://osimhistoria.com/podcast/מהי-מודעות-עושים-פסיכולוגיה/',
+  71:  'https://osimhistoria.com/podcast/פגיעה-מוסרית-אל-תמחאו-לי-כפיים-עושים-פ/',
+  70:  'https://osimhistoria.com/podcast/למה-קשה-לנו-לקבל-החלטות-עושים-פסיכולוג/',
+  69:  'https://osimhistoria.com/podcast/עיוותי-חשיבה-הרכיב-הקוגניטיבי-של-הcbt-עו/',
+  68:  'https://osimhistoria.com/podcast/הסודות-שאנו-מסתירים-עושים-פסיכולוגיה/',
+  67:  'https://osimhistoria.com/podcast/מוט-הברזל-ששינה-את-פיניאס-גייג-על-נויר/',
+  66:  'https://osimhistoria.com/podcast/צעדים-קטנים-ליצירת-שינויים-גדולים-עוש/',
+  65:  'https://osimhistoria.com/podcast/יצירת-הרגלים-חדשים-עושים-פסיכולוגיה/',
+  64:  'https://osimhistoria.com/podcast/האושר-טמון-בחברות-אמת-עושים-פסיכולוגי/',
+  63:  'https://osimhistoria.com/podcast/משמעות-מחפשת-אדם-עושים-פסיכולוגיה/',
+  62:  'https://osimhistoria.com/podcast/מציאת-קצב-הלב-הנכון-עושים-פסיכולוגיה/',
+  61:  'https://osimhistoria.com/podcast/השינוי-מתחיל-היום-עושים-פסיכולוגיה/',
+  60:  'https://osimhistoria.com/podcast/מה-הזהות-הדיגיטלית-שלנו-אומרת-עלינו-עו/',
+  59:  'https://osimhistoria.com/podcast/אני-לא-אתנהג-כמו-ההורים-שלי-על-העברה-בי/',
+  58:  'https://osimhistoria.com/podcast/תנועה-לעבר-החלמה-עושים-פסיכולוגיה/',
+  57:  'https://osimhistoria.com/podcast/מלחמה-חרדה-אשמה-וחוסן-עושים-פסיכולוגי/',
+  55:  'https://osimhistoria.com/podcast/במי-אנחנו-מקנאים-ולמה-עושים-פסיכולוגי/',
+  54:  'https://osimhistoria.com/podcast/להגיב-טוב-יותר-ויסות-רגשי-עושים-פסיכול/',
+  51:  'https://osimhistoria.com/podcast/הטוב-המוחלט-הרע-המוחלט-עושים-פסיכולוג/',
+  50:  'https://osimhistoria.com/podcast/איך-להגן-על-הילדים-שלנו-ילדים-חשופים-לא/',
+  49:  'https://osimhistoria.com/podcast/הילדה-שחלמה-על-חיים-אחרים-אלימות-במשפח/',
+  48:  'https://osimhistoria.com/podcast/איך-לתקן-לב-שבור-רוני-שינקמן-עושים-פסי/',
+  47:  'https://osimhistoria.com/podcast/איך-אנחנו-מגינים-על-עצמנו-מנגנוני-הגנה/',
+  46:  'https://osimhistoria.com/podcast/אל-תוך-הלא-מודע-מנגנוני-הגנה-חלק-א-עושי/',
+  45:  'https://osimhistoria.com/podcast/האם-כולנו-מכורים-עושים-פסיכולוגיה/',
+  44:  'https://osimhistoria.com/podcast/למה-קשה-לנו-לבחור-עושים-פסיכולוגיה/',
+  43:  'https://osimhistoria.com/podcast/האם-הפרעות-קשב-וריכוז-הן-באמת-הפרעות-ע/',
+  42:  'https://osimhistoria.com/podcast/קודם-כל-תרגעו-איך-מתמודדים-עם-לחץ-עושי/',
+  41:  'https://osimhistoria.com/podcast/זהירות-מתחזה-לפנייך-עושים-פסיכולוגיה/',
+  40:  'https://osimhistoria.com/podcast/הסוד-לגירושים-בריאים-עושים-פסיכולוגי/',
+  39:  'https://osimhistoria.com/podcast/איך-אפשר-להציל-חיים-עושים-פסיכולוגיה/',
+  38:  'https://osimhistoria.com/podcast/המחיר-האמיתי-של-השימוש-בסמאטרפון-עושי/',
+  37:  'https://osimhistoria.com/podcast/להסתגל-למציאות-חדשה-איך-לאבד-ולהישאר-ב/',
+  36:  'https://osimhistoria.com/podcast/לקבל-להתחייב-לעשות-שינוי-טיפול-ב-act-עוש/',
+  35:  'https://osimhistoria.com/podcast/אינטליגנציה-בריאותית-על-גוף-נפש-ובריא/',
+  34:  'https://osimhistoria.com/podcast/ללא-סימנים-כחולים-אלימות-רגשית-עושים-פ/',
+  33:  'https://osimhistoria.com/podcast/לשחרר-את-הנוקשות-גמישות-נפשית-עושים-פס/',
+  32:  'https://osimhistoria.com/podcast/האישה-שברחה-3-ימים-לפני-החתונה-אלימות-ר/',
+  31:  'https://osimhistoria.com/podcast/המגיפה-השקטה-בעיות-שינה-עושים-פסיכולו/',
+  30:  'https://osimhistoria.com/podcast/יש-ברירה-אחרת-אלימות-פיזית-ורגשית-עושי/',
+  29:  'https://osimhistoria.com/podcast/סימנים-מקדימים-לאלימות-פיזית-ורגשית-ע/',
+  28:  'https://osimhistoria.com/podcast/מזל-טוב-דיכאון-אחרי-לידה-עושים-פסיכול/',
+  27:  'https://osimhistoria.com/podcast/זיהוי-האלימות-השקופה-אלימות-רגשית-וכל/',
+  26:  'https://osimhistoria.com/podcast/אין-מחיר-לחופש-אלימות-רגשית-וכלכלית-עו/',
+  25:  'https://osimhistoria.com/podcast/סביבה-או-תורשה-מה-מעצב-אותנו-יותר-עושי/',
+  24:  'https://osimhistoria.com/podcast/אנשים-רגישים-מאוד-עושים-פסיכולוגיה/',
+  23:  'https://osimhistoria.com/podcast/מחשבה-יוצרת-מציאות-עושים-פסיכולוגיה/',
+  22:  'https://osimhistoria.com/podcast/לאהוב-את-עצמי-קצת-יותר-מדי-עושים-פסיכ/',
+  21:  'https://osimhistoria.com/podcast/איך-מטפלים-בפוסט-טראומה-עושים-פסיכולו/',
+  20:  'https://osimhistoria.com/podcast/שבויה-באהבה-פוסט-טראומה-מורכבת-עושים-פ/',
+  19:  'https://osimhistoria.com/podcast/המילואימניק-שחזר-שונה-פוסט-טראומה-עוש/',
+  18:  'https://osimhistoria.com/podcast/אהבה-ממבט-ראשון-עושים-פסיכולוגיה/',
+  17:  'https://osimhistoria.com/podcast/האם-אתם-שפויים-עושים-פסיכולוגיה/',
+  16:  'https://osimhistoria.com/podcast/רק-על-הקווים-ocd-עושים-פסיכולוגיה/',
+  15:  'https://osimhistoria.com/podcast/עד-כמה-אתם-ניתנים-להיפנוט-עושים-פסיכול/',
+  14:  'https://osimhistoria.com/podcast/היפנוזה-אומנות-המיקוד-עושים-פסיכולוג/',
+  13:  'https://osimhistoria.com/podcast/חלומות-הדרך-ללא-מודע-עושים-פסיכולוגיה/',
+  12:  'https://osimhistoria.com/podcast/האם-אנחנו-יכולים-לסמוך-על-הזיכרון-שלנו/',
+  11:  'https://osimhistoria.com/podcast/האכזריות-של-הנאצים-עושים-פסיכולוגיה/',
+  10:  'https://osimhistoria.com/podcast/החיים-לצד-הפרעת-האכילה-עושים-פסיכולוג/',
+  9:   'https://osimhistoria.com/podcast/50-גוונים-של-שליטה-עושים-פסיכולוגיה/',
+  8:   'https://osimhistoria.com/podcast/האם-כולנו-ביסקסואלים-עושים-פסיכולוגי/',
+  7:   'https://osimhistoria.com/podcast/מוח-מסודר-מידי-סמים-פסיכדליים-חלק-ב-עו/',
+  6:   'https://osimhistoria.com/podcast/מולקולות-להרחבת-תודעה-סמים-פסיכדליים/',
+  5:   'https://osimhistoria.com/podcast/עושים-פסיכולוגיה-תסמונת-קדם-וסתית-יש/',
+  4:   'https://osimhistoria.com/podcast/הפסיכולוגיה-של-כתות-חלק-ב-עושים-פסיכו/',
+  3:   'https://osimhistoria.com/podcast/עושים-פסיכולוגיה-הפסיכולוגיה-של-כתות/',
+  2:   'https://osimhistoria.com/podcast/עושים-פסיכולוגיה-עד-כמה-אנחנו-מרשים-לע/',
+  1:   'https://osimhistoria.com/podcast/האישה-ששכחה-הכל-עושים-פסיכולוגיה/',
+};
 
-function epUrl(title) {
-  return 'https://osimhistoria.com/podcast/' + makeSlug(title) + '/';
+function epUrl(num) {
+  return EP_URLS[num] || 'https://osimhistoria.com/show/osim-psychology/';
 }
 
 function normalize(str) { return str.toLowerCase().trim(); }
@@ -319,7 +415,7 @@ function renderCard(ep, terms) {
         <span class="ep-date">${date}</span>
       </div>
       <div class="ep-desc">${highlight(desc, terms)}</div>
-      <a class="ep-listen" href="${epUrl(title)}" target="_blank" rel="noopener">להאזנה ←</a>
+      <a class="ep-listen" href="${epUrl(num)}" target="_blank" rel="noopener">להאזנה ←</a>
     </div>`;
 }
 
