@@ -9,102 +9,135 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-      background: #1a1a2e; color: #eee;
+      background: linear-gradient(150deg, #f5f0ff 0%, #fdf4ff 40%, #fff0f6 100%);
       min-height: 100vh; padding: 40px 20px 80px;
       direction: rtl;
     }
 
-    /* ── Header ──────────────────────────────────────────────────── */
-    header { text-align: center; margin-bottom: 32px; }
+    .deco { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; opacity: .18; }
+
+    header, .search-wrap, .result-info, #results { position: relative; z-index: 1; }
+
+    header { text-align: center; margin-bottom: 36px; }
     header h1 {
-      font-size: 1.8rem; font-weight: 700; letter-spacing: 1px;
-      color: #e94560; margin-bottom: 6px;
+      font-size: 2.1rem; font-weight: 800;
+      background: linear-gradient(135deg, #7c3aed 0%, #c026d3 60%, #e11d74 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 8px; letter-spacing: .5px;
     }
-    header p { color: #a8b2d8; font-size: .9rem; }
+    header p { color: #6b7280; font-size: .92rem; }
 
-    /* ── Search box ──────────────────────────────────────────────── */
-    .search-wrap {
-      max-width: 720px; margin: 0 auto 10px;
-      position: relative;
-    }
-    .search-icon {
-      position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
-      color: #3a4a6a; font-size: 1.1rem; pointer-events: none;
-    }
+    .search-wrap { max-width: 720px; margin: 0 auto 10px; position: relative; }
+    .search-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: #a78bfa; font-size: 1.1rem; pointer-events: none; }
     #search-input {
-      width: 100%; background: #16213e; border: 2px solid #0f3460;
-      color: #eee; padding: 15px 46px 15px 16px;
-      border-radius: 12px; font-size: 1rem;
-      transition: border-color .2s; direction: auto;
+      width: 100%; background: #fff; border: 2px solid #e9d5ff;
+      color: #111827; padding: 16px 48px 16px 18px;
+      border-radius: 14px; font-size: 1rem;
+      box-shadow: 0 4px 20px rgba(124,58,237,.1);
+      transition: border-color .2s, box-shadow .2s; direction: auto;
     }
-    #search-input:focus { outline: none; border-color: #e94560; }
-    #search-input::placeholder { color: #3a4a6a; }
+    #search-input:focus { outline: none; border-color: #7c3aed; box-shadow: 0 4px 24px rgba(124,58,237,.2); }
+    #search-input::placeholder { color: #c4b5fd; }
 
-    /* ── Result count ────────────────────────────────────────────── */
-    .result-info {
-      max-width: 720px; margin: 0 auto 20px;
-      font-size: .78rem; color: #3a4a6a; text-align: left; direction: ltr;
-    }
-    .result-info span { color: #a8b2d8; }
+    .result-info { max-width: 720px; margin: 0 auto 20px; font-size: .78rem; color: #9ca3af; text-align: left; direction: ltr; }
+    .result-info span { color: #7c3aed; font-weight: 700; }
 
-    /* ── Episode card ────────────────────────────────────────────── */
     #results { max-width: 720px; margin: 0 auto; }
 
     .ep-card {
-      background: #16213e; border: 1px solid #0f3460;
-      border-radius: 14px; padding: 20px 22px;
-      margin-bottom: 12px; transition: border-color .15s;
+      background: #fff; border: 1.5px solid #ede9fe;
+      border-radius: 16px; padding: 20px 24px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 12px rgba(124,58,237,.06);
+      transition: box-shadow .2s, transform .15s, border-color .2s;
+      position: relative; overflow: hidden;
     }
-    .ep-card:hover { border-color: #1e4a80; }
+    .ep-card::before {
+      content: ''; position: absolute; right: 0; top: 0; bottom: 0;
+      width: 4px; background: linear-gradient(180deg, #7c3aed, #e11d74);
+      border-radius: 0 14px 14px 0;
+    }
+    .ep-card:hover { box-shadow: 0 6px 28px rgba(124,58,237,.14); transform: translateY(-2px); border-color: #c4b5fd; }
 
-    .ep-top {
-      display: flex; align-items: flex-start;
-      gap: 14px; margin-bottom: 8px;
-    }
+    .ep-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
     .ep-num {
-      background: #0f3460; color: #4ecca3;
-      font-size: .65rem; font-weight: 700; letter-spacing: .5px;
-      padding: 3px 8px; border-radius: 6px;
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      color: #fff; font-size: .63rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
       white-space: nowrap; flex-shrink: 0; margin-top: 3px;
     }
-    .ep-title {
-      font-size: 1rem; font-weight: 700; color: #eee; line-height: 1.4;
-      flex: 1;
-    }
-    .ep-date {
-      font-size: .72rem; color: #3a4a6a;
-      white-space: nowrap; flex-shrink: 0; margin-top: 4px;
-    }
+    .ep-title { font-size: 1rem; font-weight: 700; color: #111827; line-height: 1.4; flex: 1; }
+    .ep-date { font-size: .72rem; color: #9ca3af; white-space: nowrap; flex-shrink: 0; margin-top: 4px; }
 
-    .ep-desc {
-      font-size: .84rem; color: #a8b2d8; line-height: 1.6;
-      margin-right: 4px; direction: ltr; text-align: left;
-    }
+    .ep-desc { font-size: .84rem; color: #4b5563; line-height: 1.65; margin-right: 4px; direction: rtl; text-align: right; }
 
     .ep-listen {
       display: inline-block; margin-top: 12px;
-      font-size: .73rem; color: #3a4a6a; text-decoration: none;
-      border: 1px solid #0f3460; border-radius: 6px;
-      padding: 4px 10px; transition: all .15s;
+      font-size: .74rem; color: #7c3aed; text-decoration: none;
+      border: 1.5px solid #c4b5fd; border-radius: 20px;
+      padding: 5px 14px; font-weight: 600; transition: all .15s;
     }
-    .ep-listen:hover { color: #4ecca3; border-color: #4ecca3; }
+    .ep-listen:hover { background: #7c3aed; color: #fff; border-color: #7c3aed; }
 
-    mark {
-      background: rgba(233,69,96,.25); color: #f07080;
-      border-radius: 3px; padding: 0 2px;
-    }
+    mark { background: rgba(192,38,211,.13); color: #a21caf; border-radius: 3px; padding: 0 2px; }
 
-    /* ── Empty / no-query states ─────────────────────────────────── */
-    .state-msg {
-      max-width: 720px; margin: 60px auto;
-      text-align: center; color: #3a4a6a; font-size: .95rem;
-    }
-    .state-msg strong { display: block; font-size: 2rem; margin-bottom: 10px; }
+    .state-msg { max-width: 720px; margin: 60px auto; text-align: center; color: #9ca3af; font-size: .95rem; }
+    .state-msg strong { display: block; font-size: 2.8rem; margin-bottom: 12px; }
   </style>
 </head>
 <body>
 
+<!-- Decorative neural background -->
+<div class="deco">
+  <svg width="400" height="400" style="position:absolute;top:-80px;left:-100px" viewBox="0 0 400 400">
+    <circle cx="200" cy="200" r="4" fill="#7c3aed"/><circle cx="80" cy="90" r="3" fill="#c026d3"/>
+    <circle cx="310" cy="80" r="3" fill="#7c3aed"/><circle cx="60" cy="280" r="4" fill="#a855f7"/>
+    <circle cx="340" cy="290" r="3" fill="#c026d3"/><circle cx="190" cy="340" r="3" fill="#7c3aed"/>
+    <circle cx="150" cy="120" r="2.5" fill="#e11d74"/><circle cx="270" cy="160" r="2.5" fill="#a855f7"/>
+    <line x1="200" y1="200" x2="80" y2="90" stroke="#7c3aed" stroke-width="1.2"/>
+    <line x1="200" y1="200" x2="310" y2="80" stroke="#a855f7" stroke-width="1.2"/>
+    <line x1="200" y1="200" x2="60" y2="280" stroke="#c026d3" stroke-width="1.2"/>
+    <line x1="200" y1="200" x2="340" y2="290" stroke="#7c3aed" stroke-width="1.2"/>
+    <line x1="200" y1="200" x2="190" y2="340" stroke="#a855f7" stroke-width="1.2"/>
+    <line x1="80" y1="90" x2="150" y2="120" stroke="#e9d5ff" stroke-width=".8"/>
+    <line x1="310" y1="80" x2="270" y2="160" stroke="#e9d5ff" stroke-width=".8"/>
+    <line x1="60" y1="280" x2="190" y2="340" stroke="#e9d5ff" stroke-width=".8"/>
+    <line x1="340" y1="290" x2="270" y2="160" stroke="#e9d5ff" stroke-width=".8"/>
+    <line x1="150" y1="120" x2="270" y2="160" stroke="#f3e8ff" stroke-width=".6"/>
+  </svg>
+  <svg width="320" height="320" style="position:absolute;bottom:60px;right:-80px" viewBox="0 0 320 320">
+    <circle cx="160" cy="160" r="4" fill="#e11d74"/><circle cx="50" cy="60" r="3" fill="#7c3aed"/>
+    <circle cx="260" cy="50" r="3" fill="#c026d3"/><circle cx="280" cy="240" r="3.5" fill="#7c3aed"/>
+    <circle cx="40" cy="240" r="3" fill="#e11d74"/><circle cx="160" cy="290" r="2.5" fill="#a855f7"/>
+    <line x1="160" y1="160" x2="50" y2="60" stroke="#e11d74" stroke-width="1.2"/>
+    <line x1="160" y1="160" x2="260" y2="50" stroke="#a855f7" stroke-width="1.2"/>
+    <line x1="160" y1="160" x2="280" y2="240" stroke="#7c3aed" stroke-width="1.2"/>
+    <line x1="160" y1="160" x2="40" y2="240" stroke="#c026d3" stroke-width="1.2"/>
+    <line x1="160" y1="160" x2="160" y2="290" stroke="#a855f7" stroke-width="1.2"/>
+    <line x1="50" y1="60" x2="260" y2="50" stroke="#f3e8ff" stroke-width=".8"/>
+    <line x1="280" y1="240" x2="160" y2="290" stroke="#f3e8ff" stroke-width=".8"/>
+    <line x1="40" y1="240" x2="160" y2="290" stroke="#f3e8ff" stroke-width=".8"/>
+  </svg>
+</div>
+
 <header>
+  <!-- Brain SVG -->
+  <svg width="72" height="68" viewBox="0 0 72 68" fill="none" style="margin-bottom:10px" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="br" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#e11d74"/>
+      </linearGradient>
+    </defs>
+    <path d="M36 8 C22 8 10 16 10 30 C10 40 17 48 28 50 C30 56 33 60 36 60" stroke="url(#br)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M36 8 C50 8 62 16 62 30 C62 40 55 48 44 50 C42 56 39 60 36 60" stroke="url(#br)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <line x1="36" y1="8" x2="36" y2="60" stroke="url(#br)" stroke-width="1.5" stroke-dasharray="3,2.5" opacity=".6"/>
+    <path d="M18 26 Q23 21 28 26 Q33 31 28 36" stroke="url(#br)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M14 38 Q19 33 24 38 Q26 43 21 45" stroke="url(#br)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M54 26 Q49 21 44 26 Q39 31 44 36" stroke="url(#br)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M58 38 Q53 33 48 38 Q46 43 51 45" stroke="url(#br)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="36" cy="8" r="3" fill="url(#br)"/>
+    <circle cx="36" cy="60" r="3" fill="url(#br)"/>
+  </svg>
   <h1>עושים פסיכולוגיה</h1>
   <p>חפשו פרק לפי נושא, מילת מפתח, שם אורח, תסמונת, טיפול או כל מה שמעניין</p>
 </header>
@@ -118,118 +151,130 @@
 <div id="results"></div>
 
 <script>
-// ── Episode data ─────────────────────────────────────────────────────────────
-// [episode_number, hebrew_title, date_display, description_keywords]
 const EPISODES = [
-  [106, "הגבר המיני — כשציפייה פוגשת מציאות", "מאי 2026", "Male sexuality and gender roles in intimate relationships. Expectations vs reality for men. Vulnerability, emotional expression, masculinity, intimacy, marriage, fatigue, sexuality after children. Guest: Hananiel Ross, clinical psychologist."],
-  [105, "להיות גבר בישראל — זהות, אבהות ולוחמה", "מאי 2026", "Modern masculinity in Israel through four pillars: anchor, provider, protector, independence. Empathy gap, emotional disconnect, reservists returning from combat to family life, fatherhood, identity. Guest: Hananiel Ross, clinical psychologist."],
-  [104, "לא רק תנועות עיניים — EMDR", "מרץ 2026", "EMDR therapy for trauma — bilateral stimulation, how it works on the brain, effectiveness from test anxiety to complex PTSD, group treatment. Dr. Udi Oren explains the protocol step by step. Post October 7th treatment."],
-  [103, "המכורים המתפקדים — האם כולנו מכורים לקנאביס?", "מרץ 2026", "Cannabis addiction and functional addicts. Brain mechanisms driving repeated use, where is the line between habit and addiction, effects on relationships, medical marijuana myths. Prof. Daniel Feingold, addiction expert."],
-  [102, "דימוי גוף — הזוגיות שלנו עם עצמנו", "פברואר 2026", "95% of people want to change something about their bodies. Body image vs. self-worth, self-esteem, body positivity, when body image develops, unconditional self-acceptance, weight, appearance. Clinical psychologist."],
-  [101, "חוסן נפשי אחרי מלחמה — פוסט טראומה ופסיכולוגיה חיובית", "ינואר 2026", "Post-trauma resilience after October 7. Brain changes during trauma recovery, positive psychology, social support, self-efficacy, PTSD, gratitude. Prof. Oren Kaplan, clinical psychologist and PTSD expert."],
-  [100, "הקול בראש — על הדיבור הפנימי שלנו", "ינואר 2026", "Inner speech and self-talk — what is the voice in your head, neurological mechanisms, development in children, people without inner speech, converting critical self-talk into productive tools. Prof. Hamutal Kreiner, language and thought."],
-  [99, "מאונדה עד פרו — טקסי איוואסקה, פסיכדלים ומפגש עם נשמות", "דצמבר 2025", "Ayahuasca ceremonies, psychedelic experiences, consciousness research. What changes after psychedelics, hours vs years of therapy, psychedelic-assisted therapy, Amazon, spiritual experiences. Dr. Itamar Cohen, clinical psychologist."],
-  [98, "זה לא חייב לכאוב — כאב כרוני", "נובמבר 2025", "Neuroplastic chronic pain — pain originating in the brain not physical damage. Affects 85% of chronic back pain cases, pelvic pain, treatment reduces pain in 66% of cases. Lehi Geva explains her healing journey."],
-  [97, "מוזיקה ללב היא חודרת — מוזיקה מוח ורגש", "אוקטובר 2025", "Music's effect on the brain — why we remember old jingles, emotional responses to music, Mozart effect validity, advertising and memory, Parkinson's therapy, musical chills, neuroscience of music. Amit Avron, music psychology."],
-  [96, "איך באמת משנים הרגלים?", "אוקטובר 2025", "Habit change mechanisms — why explanations don't work, environment determines success, lasting behavioral transformation. Dr. Efrat Gil transformed from 125kg to athlete. What actually causes change."],
-  [95, "לצאת מהגיהנום הרגשי — טיפול DBT", "ספטמבר 2025", "DBT dialectical behavior therapy — developed by Prof. Marsha Linehan from personal trauma. Emotional regulation, borderline personality, emotional dysregulation, distress tolerance, mindfulness. Esti Brukman, clinical psychologist."],
-  [94, "עובד מחפש משמעות", "ספטמבר 2025", "Meaning in work — what creates job fulfillment, burnout vs. deeper lack of significance, reasons for leaving jobs, components of meaningful work. Yara Aldame, career psychologist and occupational psychologist."],
-  [93, "הגלילה האינסופית — ההתמכרות לטכנולוגיה", "אוגוסט 2025", "Technology and social media addiction — infinite scroll, algorithms, gaming psychology, screen time, who profits from your attention, bots, cognitive manipulation. Lior Broder, game developer and cognitive psychologist."],
-  [92, "סוד ההצלחה", "יולי 2025", "Success psychology — what distinguishes successful people, one definition vs many, goal setting, age 50 timing for fulfillment, evaluating success properly. Prof. Oz Guterman who mentored leaders and educators."],
-  [91, "מישהו מקשיב לי, שומע אותי", "יולי 2025", "Active listening as rare skill — 20 seconds before interruption, attention span, modern obstacles to genuine listening, listening school, empathy. Shari Jackson Klein, founder of Israel's Listening Center."],
-  [90, "כולנו צריכים טיפול?", "יוני 2025", "900,000 Israelis with PTSD, depression or anxiety post-October 7. How to know if you need therapy, which type suits you, mental health system overload, psychiatry, therapy access in Israel. Dr. Yardan Levinsky, psychiatrist."],
-  [89, "ילדים זה שמחה? — על אל הורות", "מאי 2025", "Voluntary childlessness in Israel — social pressure, OECD highest birth rate, choosing not to have children, when are you having kids pressure, psychological complexity of non-parenthood. Social workers from Grofleh group."],
-  [88, "תאי לחץ — לחדש את המוח", "מאי 2025", "Hyperbaric oxygen chamber therapy — heals physical wounds and brain. PTSD, fibromyalgia, pre-dementia, stroke recovery, brain tissue renewal, unexpected healing. Prof. Shai Efrati discovered healing power."],
-  [87, "חרדה — לפרק גולם וליצור פרפר", "אפריל 2025", "Anxiety psychology — existential fears, mortality, failure, rejection, climate anxiety, AI fears. Living with anxiety while maintaining sanity, anxiety management. Omer Shrir, anxiety expert and Brain Story podcast host."],
-  [86, "המוח של איינשטיין — אינטליגנציה, סביבה ותורשה", "מרץ 2025", "Einstein's brain stolen by pathologist Harvey, never published research. Intelligence anatomy, nature vs nurture, genetics and IQ, brain structure and genius. Journalist Steve Levy investigated the theft."],
-  [85, "מבחני אינטליגנציה — המקרה של דריל לסטר", "מרץ 2025", "IQ testing bias and racial discrimination — Daryl Lester case, special education misdiagnosis, historic California lawsuit, African American students banned from IQ tests. Dr. Jordan Glicksman, cognition researcher."],
-  [84, "להיות בלשי אהבה — איך מתקשרים בזוגיות?", "פברואר 2025", "Couple communication and relationship maintenance — honeymoon phase ending, routine, walls rising, disappointment, frustration. Why it all comes down to communication and listening. Selebi Friedman, couples coach."],
-  [83, "כדור הארץ שטוח — פסיכולוגיה קונספרטיבית", "ינואר 2025", "Conspiracy theory psychology — Rabin assassination, vaccine chips, moon landing denial, flat earth, COVID conspiracies. Why people believe, why hard to refute, stable percentage of believers. Dr. Haim Shapira, philosopher."],
-  [82, "דרך המסך — טיפול אינטרנטי", "ינואר 2025", "Online therapy and teletherapy — mental health therapist shortage in Israel and worldwide, COVID digitalization, can AI replace therapists, digital mental health effectiveness. Dr. Yoni Shalom, University of Haifa."],
-  [81, "כוחה של קבוצה — אנליזה קבוצתית", "דצמבר 2024", "Group analysis therapy — born post-WWII mental health crisis, group dynamics vs individual therapy, who is it suitable for, collective healing, psychoanalysis. Yael Shahar, clinical psychologist and group facilitator."],
-  [80, "הפסיכולוגיה של ההגשמה העצמית — איך בוחרים מקצוע?", "נובמבר 2024", "Career choice psychology and vocational identity — parental influence, strengths identification, occupational self-realization, life design, career crisis. Prof. Hadassah Litman Ovadia, career psychologist."],
-  [79, "אכילה רגשית — ממחר דיאטה?", "אוקטובר 2024", "Emotional eating — comfort eating, food as punishment or reward, restriction and overeating, food-weight-body image connection, mindful eating, dietary psychology. Tal Chamra Shasson, clinical dietitian."],
-  [78, "אחים — יחסי אהבה שנאה", "ספטמבר 2024", "Sibling relationships — birth order effects, competition for resources and attention, gender and age gaps, personality traits of oldest/middle/youngest, sibling rivalry and love. Dr. Avidan Milevsky."],
-  [77, "איך בגדים משפיעים עלינו? הפסיכולוגיה של הלבוש", "ספטמבר 2024", "Fashion psychology — clothing effects on mood and feelings, emotional regulation through clothing, self-perception, confidence, enclothed cognition. Dr. Tali Stolovy, clothing psychology researcher."],
-  [76, "אני מרגיש משמע אני קיים", "אוגוסט 2024", "Emotions and emotional acceptance — what are emotions, healthy processing, emotional disconnection costs, connecting to feelings. Dr. Elinor Pardes, clinical psychologist. Based on Uzi Hitman."],
-  [75, "איך אנחנו תופסים את העולם?", "יולי 2024", "Visual perception and reality — the dress phenomenon (gold/white vs blue/black), individual perception differences, adult vs child perception, visual illusions, is reality objective or subjective. Prof. Tzvi Gnal."],
-  [74, "כל העיניים אליי — חרדה חברתית", "יוני 2024", "Social anxiety disorder — distinguished from shyness, stomach tension, fear of scrutiny, speech anxiety, conversation avoidance, CBT treatment, exposure therapy. Dr. Miriam Levin Goren, clinical psychologist."],
-  [73, "משעמם לי וזה בלתי נסבל — למה חשוב להשתעמם?", "יוני 2024", "Psychology of boredom — what is boredom, why it matters, exit strategies, curiosity, creativity and boredom, life satisfaction. Dr. Gadi On, boredom researcher, Open University faculty."],
-  [72, "מהי מודעות?", "מאי 2024", "Consciousness psychology — where is consciousness located, brain or non-physical dualism, animal consciousness, future AI consciousness, hard problem of consciousness. Prof. Liad Mudrik, Tel Aviv University brain sciences."],
-  [71, "פגיעה מוסרית — אל תמחאו לי כפיים", "מאי 2024", "Moral injury — injury to morality not physical body, soldiers, October 7, trauma, PTSD, memory of Dor Shafir murdered October 7. Prof. Yossi Levi Belz, trauma expert. Suicide prevention."],
-  [70, "למה קשה לנו לקבל החלטות?", "מאי 2024", "Decision-making psychology — 35,000 daily decisions, decision fatigue, cognitive bias, what is a good decision, improving decision process, paralysis of choice. Elad Michalovitz-Sucker, social psychologist."],
-  [69, "עיוותי חשיבה — הרכיב הקוגניטיבי של CBT", "אפריל 2024", "Cognitive distortions — mind reading, personalization, self-blame, catastrophizing, all-or-nothing thinking, CBT reframing, depression and anxiety patterns. Asher Shorek, educational psychologist."],
-  [68, "הסודות שאנו מסתירים", "אפריל 2024", "Secrets vs. lies psychology — childhood mixed messages, secret types, personal costs of secrets, when secrets are harmful, couples and family therapy. Naama Moses, CBT therapist."],
-  [67, "מוט הברזל ששינה את פיניאס גייג׳ — על נוירופסיכולוגיה", "מרץ 2024", "Neuropsychology case study — Phineas Gage 1848 iron rod through brain, personality change after brain injury, frontal lobe, behavior, character. Dr. Naama Kibilis Meyeri, rehabilitation and neuropsychologist."],
-  [66, "צעדים קטנים ליצירת שינויים גדולים", "מרץ 2024", "Small steps for big behavioral change — habit creation, environmental design, difficulty building healthy habits, persistence, consistency. Part 2. Judith Katz, Thinking Well podcast host."],
-  [65, "יצירת הרגלים חדשים", "פברואר 2024", "Habit formation basics — what are habits, difference between goals habits and addictions, building healthy habits and eliminating harmful ones. Part 1. Judith Katz, Thinking Well podcast host."],
-  [64, "האושר טמון בחברות אמת", "פברואר 2024", "Meaningful friendships and happiness — 75-year Harvard study from 1938, social relationships and all life areas, gender differences in friendship, meaningful connections. Dr. Alon Vaserman, Friends program founder."],
-  [63, "משמעות מחפשת אדם", "ינואר 2024", "Meaning in modern life — existential question, why wake up, meaning when there is no single truth, meaning during crisis. Dr. Peninit Rosov Netzner, researcher and lecturer."],
-  [62, "מציאת קצב הלב הנכון", "ינואר 2024", "Heart rate regulation, emotional regulation through breathing, biofeedback, heart coherence, nervous system. Relaxation and physiological control."],
-  [61, "השינוי מתחיל היום", "דצמבר 2023", "Behavioral change and overcoming procrastination — behavioral stagnation, motivation, starting over, new year resolutions, how to actually change."],
-  [60, "מה הזהות הדיגיטלית שלנו אומרת עלינו?", "דצמבר 2023", "Digital identity and online self-presentation — social media, Instagram, impression management, what our online behavior reveals about us, digital footprint."],
-  [59, "אני לא אתנהג כמו ההורים שלי", "נובמבר 2023", "Intergenerational trauma and family patterns — breaking cycles, parenting differently, inherited trauma, how we repeat our parents' behavior, childhood wounds."],
-  [58, "תנועה לעבור החלמה", "נובמבר 2023", "Post-trauma recovery narratives, movement therapy, October 7 aftermath, healing after traumatic events, resilience, somatic therapy."],
-  [57, "מלחמה — חרדה, אשמה וחוסן", "אוקטובר 2023", "War psychology — anxiety and fear during wartime, survivor guilt, resilience, mental health during conflict, October 7, soldiers and civilians coping."],
-  [55, "במי אנחנו מקנאים ולמה", "אוקטובר 2023", "Envy and jealousy psychology — difference between envy and jealousy, social comparison, why we envy, emotional responses to others' success, coping with envy."],
-  [54, "להגיב טוב יותר", "ספטמבר 2023", "Emotion regulation — responding vs. reacting, managing emotional reactions, triggers, pause before responding, emotional intelligence, anger management."],
-  [51, "הטוב המוחלט, הרע המוחלט", "אוגוסט 2023", "Melanie Klein psychoanalytic theory — object relations, splitting defense mechanism, good and bad objects, projective identification, borderline psychology."],
-  [50, "איך להגן על הילדים שלנו", "אוגוסט 2023", "Protecting children from family violence — child exposure to domestic violence, resilience in children, parenting strategies, child protection."],
-  [49, "הילדה שחלמה על חיים אחרים", "אוגוסט 2023", "Childhood emotional abuse and neglect — growing up in a difficult family, childhood trauma effects, healing from childhood wounds."],
-  [48, "איך לתקן לב שבור", "אוגוסט 2023", "Heartbreak recovery — breakup psychology, grief after relationship loss, self-love after separation, emotional healing, attachment and loss."],
-  [47, "איך אנחנו מגינים על עצמנו — מנגנוני הגנה, חלק ב׳", "יולי 2023", "Defense mechanisms part 2 — projection, denial, rationalization, intellectualization, sublimation, splitting, psychoanalytic defense theory."],
-  [46, "אל תוך הלא מודע — מנגנוני הגנה, חלק א׳", "יולי 2023", "Unconscious defense mechanisms part 1 — Freud, repression, the unconscious mind, why we develop defenses, psychoanalytic theory."],
-  [45, "האם כולנו מכורים?", "יוני 2023", "Addiction psychology — what is addiction, types of addiction, dopamine and reward, behavioral addiction, substance abuse, treatment, recovery."],
-  [44, "למה קשה לנו לבחור", "יוני 2023", "Choice paralysis — paradox of choice, decision anxiety, Barry Schwartz, too many options, maximizers vs satisficers, choosing career and relationships."],
-  [43, "האם הפרעות קשב וריכוז הן בעיות?", "מאי 2023", "ADHD attention deficit hyperactivity disorder — diagnosis, overdiagnosis, educational impact, medication, reframing ADHD as different not deficient, adults with ADHD."],
-  [42, "קודם כל תרגעו", "מאי 2023", "Stress management — relaxation techniques, breathing exercises, progressive muscle relaxation, chronic stress effects, coping strategies, work stress."],
-  [41, "זהירות מתחזה לפנייך", "אפריל 2023", "Imposter syndrome — self-doubt, feeling like a fraud, high-achieving anxiety, perfectionism, who suffers from imposter syndrome, overcoming it."],
-  [40, "הסוד לגירושים בריאים", "אפריל 2023", "Healthy divorce — separation psychology, child impact of divorce, co-parenting, telling children about divorce, emotional recovery after relationship ending."],
-  [39, "איך אפשר להציל חיים", "מרץ 2023", "Suicide prevention — recognizing warning signs, what to say to someone at risk, crisis intervention, mental health first aid, how to help a friend."],
-  [38, "המחיר האמיתי של הסמארטפון", "מרץ 2023", "Smartphone addiction and psychology — screen time effects, blue light, social comparison on social media, FOMO, digital wellbeing, children and phones."],
-  [37, "להסתגל למציאות חדשה", "מרץ 2023", "Adaptation and adjustment disorder — grief, loss, coping with change, immigration, divorce, death, major life transitions, resilience."],
-  [36, "לקבל, להתחייב, לעשות שינוי", "פברואר 2023", "ACT therapy — acceptance and commitment therapy, psychological flexibility, mindfulness, values clarification, committed action, living a meaningful life."],
-  [35, "אינטליגנציה בריאותית", "ינואר 2023", "Mind-body connection — health psychology, psychosomatic illness, placebo effect, how emotions affect physical health, wellness psychology."],
-  [34, "ללא סימנים כחולים", "ינואר 2023", "Invisible emotional abuse — psychological harm without physical marks, covert abuse, manipulation, gaslighting, recognizing emotional abuse patterns."],
-  [33, "לשחרר את הנוקשות", "ינואר 2023", "Psychological flexibility — overcoming cognitive rigidity, black and white thinking, accepting uncertainty, mental adaptability, openness to change."],
-  [32, "האישה שברחה 3 ימים לפני החתונה", "ינואר 2023", "Recognizing relationship abuse before commitment — red flags, trauma bonding, cold feet vs real danger, toxic relationships, last-minute escape."],
-  [31, "המגיפה השקטה", "ינואר 2023", "Sleep disorders — insomnia, sleep deprivation effects, psychological impact of poor sleep, CBT for insomnia, sleep hygiene, silent epidemic."],
-  [30, "יש ברירה אחרת — אלימות פיזית ורגשית", "דצמבר 2022", "Escaping domestic violence — physical and emotional abuse survivors, exit strategies, support systems, domestic violence resources and help."],
-  [29, "סימנים מקדימים לאלימות פיזית ורגשית", "דצמבר 2022", "Early warning signs of domestic violence — red flags, abuse patterns, recognizing violence early, prevention, at-risk relationships."],
-  [28, "מזל טוב? — דיכאון אחרי לידה", "דצמבר 2022", "Postpartum depression — PPD, baby blues, perinatal mental health, maternal depression, anxiety after birth, hormones and mood, new parents."],
-  [27, "זיהוי האלימות השקופה — אלימות רגשית וכלכלית", "דצמבר 2022", "Identifying invisible relationship abuse — gaslighting, psychological manipulation, economic abuse, financial control, emotional abuse without physical marks."],
-  [26, "אין מחיר לחופש — אלימות רגשית וכלכלית", "דצמבר 2022", "Financial and emotional abuse in relationships — economic control, isolating a partner, coercive control, domestic violence, escape and freedom."],
-  [25, "סביבה או תורשה — מה מעצב אותנו יותר?", "נובמבר 2022", "Nature vs. nurture — genetics vs. environment debate, epigenetics, twin studies, personality formation, what shapes who we are."],
-  [24, "אנשים רגישים מאוד", "נובמבר 2022", "Highly sensitive person HSP — emotional sensitivity trait, sensory processing sensitivity, introversion, overstimulation, Elaine Aron's research, HSP characteristics."],
-  [23, "מחשבה יוצרת מציאות?", "נובמבר 2022", "Positive thinking and belief psychology — law of attraction validity, self-fulfilling prophecy, placebo and nocebo effects, manifestation psychology."],
-  [22, "לאהוב את עצמי… קצת יותר מדי", "אוקטובר 2022", "Narcissism and self-esteem — narcissistic personality disorder, healthy vs pathological narcissism, self-love, grandiosity, empathy deficit, toxic relationships with narcissists."],
-  [21, "איך מטפלים בפוסט טראומה?", "אוקטובר 2022", "PTSD treatment methods — EMDR, CBT exposure therapy, medication, prolonged exposure, trauma-focused therapy, when and how PTSD heals."],
-  [20, "שבויה באהבה — פוסט טראומה מורכבת", "ספטמבר 2022", "Complex PTSD from relationship trauma — C-PTSD, trauma bonding, Stockholm syndrome, leaving abusive relationships, emotional captivity in love."],
-  [19, "המילואימניק שחזר שונה — פוסט טראומה", "אוגוסט 2022", "Military PTSD — combat stress, reservist trauma, soldiers returning home changed, war wounds that don't show, IDF mental health."],
-  [18, "אהבה ממבט ראשון", "אוגוסט 2022", "Love at first sight psychology — romantic attraction, limerence, infatuation, attachment theory, chemistry and biology of falling in love."],
-  [17, "האם אתם שפויים?", "אוגוסט 2022", "Sanity and insanity psychology — what is mental health, legal insanity, psychosis, where normal ends and disorder begins, psychiatric diagnosis."],
-  [16, "רק על הקווים — OCD", "יולי 2022", "OCD obsessive-compulsive disorder — intrusive thoughts, compulsions, rituals, contamination fears, checking, ERP exposure response prevention therapy, CBT treatment."],
-  [15, "עד כמה אתם ניתנים להיפנוט?", "יולי 2022", "Hypnotizability and suggestibility — who can be hypnotized, hypnosis susceptibility factors, individual differences, fantasy proneness."],
-  [14, "היפנוזה — אומנות המיקוד", "יוני 2022", "Hypnotherapy — how hypnosis works, therapeutic applications, pain management, phobias, smoking cessation, clinical hypnosis, altered states of consciousness."],
-  [13, "חלומות — הדרך ללא מודע", "מאי 2022", "Dream psychology — REM sleep, Freudian dream analysis, what dreams mean, recurring dreams, nightmares, lucid dreaming, the unconscious mind."],
-  [12, "האם אנחנו יכולים לסמוך על הזיכרון שלנו?", "מאי 2022", "False memory and memory reliability — eyewitness testimony, Elizabeth Loftus experiments, memory distortion, implanted memories, how memory is reconstructed."],
-  [11, "האכזריות של הנאצים — פסיכולוגיה של הרוע", "אפריל 2022", "Nazi psychology and the Holocaust — obedience to authority, Milgram experiment, Arendt's banality of evil, how ordinary people commit atrocities, perpetrator psychology."],
-  [10, "החיים לצד הפרעת האכילה", "אפריל 2022", "Eating disorders — anorexia nervosa, bulimia, binge eating disorder, orthorexia, recovery, body image distortion, treatment, survival stories."],
-  [9, "50 גוונים של שליטה", "אפריל 2022", "BDSM psychology — sexual control dynamics, dominance and submission, power exchange, consent, paraphilia, psychology of kink."],
-  [8, "האם כולנו ביסקסואלים?", "מרץ 2022", "Sexual orientation psychology — bisexuality, Kinsey scale, spectrum of sexuality, sexual fluidity, gay and lesbian psychology, history of sexuality research."],
-  [7, "מוח מסודר מידי — סמים פסיכדליים, חלק ב׳", "מרץ 2022", "Psychedelics and the brain part 2 — default mode network, ego dissolution, LSD psilocybin effects on brain organization, therapeutic use, mystical experiences."],
-  [6, "מולקולות להרחבת תודעה — סמים פסיכדליים, חלק א׳", "פברואר 2022", "Psychedelic drugs history and research part 1 — LSD, psilocybin mushrooms, DMT, MDMA, consciousness expansion, Timothy Leary, psychedelic renaissance."],
-  [5, "תסמונת קדם וסתית — יש דבר כזה?", "פברואר 2022", "PMS premenstrual syndrome — hormonal effects on mood and behavior, PMDD, menstrual cycle and psychology, women's mental health, emotional changes before period."],
-  [4, "הפסיכולוגיה של כתות, חלק ב׳", "ינואר 2022", "Cult psychology part 2 — escaping cults, deprogramming, love bombing, information control, us vs them mentality, cult recovery."],
-  [3, "הפסיכולוגיה של כתות, חלק א׳", "ינואר 2022", "Cult psychology part 1 — manipulation tactics, social control, coercive persuasion, why intelligent people join cults, thought reform."],
-  [2, "עד כמה אנחנו מרשים לעצמנו להיות...עצמנו?", "דצמבר 2021", "Authenticity and self-expression — social pressure to conform, true self, how much we allow ourselves to be ourselves, masks we wear, self-concealment."],
-  [1, "האישה ששכחה הכל", "נובמבר 2021", "Memory loss and amnesia — autobiographical memory disorders, who are we without our memories, identity and memory, cases of total amnesia."],
+  [106, "הגבר המיני — כשציפייה פוגשת מציאות", "מאי 2026", "מיניות גברית, ציפיות מול מציאות, פגיעות רגשית, אינטימיות בנישואים, עייפות, מיניות אחרי ילדים, תפקידים מגדריים, זהות גברית בחדר השינה. אורח: חנניאל רוס, פסיכולוג קליני."],
+  [105, "להיות גבר בישראל — זהות, אבהות ולוחמה", "מאי 2026", "גבריות מודרנית בישראל, עוגן, פרנס, מגן ועצמאות, פער האמפתיה, ניתוק רגשי, מילואימניקים החוזרים לחיי משפחה, אבהות וזהות. אורח: חנניאל רוס, פסיכולוג קליני."],
+  [104, "לא רק תנועות עיניים — EMDR", "מרץ 2026", "טיפול EMDR לטראומה — גירוי דו-צדדי, איך הוא עובד על המוח, יעילות מחרדת מבחנים ועד PTSD מורכב, טיפול קבוצתי. ד\"ר אודי אורן מסביר את הפרוטוקול שלב אחרי שלב. טיפול אחרי השביעי באוקטובר."],
+  [103, "המכורים המתפקדים — האם כולנו מכורים לקנאביס?", "מרץ 2026", "התמכרות לקנאביס ומכורים מתפקדים. מנגנוני המוח שמניעים שימוש חוזר, היכן הגבול בין הרגל להתמכרות, השפעות על קשרים בינאישיים, מיתוסים על קנאביס רפואי. פרופ' דניאל פיינגולד, מומחה להתמכרויות."],
+  [102, "דימוי גוף — הזוגיות שלנו עם עצמנו", "פברואר 2026", "95% מהאנשים רוצים לשנות משהו בגופם. דימוי גוף מול שווי עצמי, ביקורת עצמית, גוף חיובי, מתי מתפתח דימוי הגוף, קבלה עצמית ללא תנאי, משקל ומראה חיצוני. פסיכולוגית קלינית."],
+  [101, "חוסן נפשי אחרי מלחמה — פוסט טראומה ופסיכולוגיה חיובית", "ינואר 2026", "חוסן לאחר מלחמה, שינויי המוח בהחלמה מטראומה, פסיכולוגיה חיובית, תמיכה חברתית, מסוגלות עצמית, PTSD, הכרת תודה. פרופ' אורן קפלן, פסיכולוג קליני ומומחה לפוסט-טראומה."],
+  [100, "הקול בראש — על הדיבור הפנימי שלנו", "ינואר 2026", "דיבור פנימי ושיחה עצמית — מהו הקול בראשנו, מנגנונים נוירולוגיים, התפתחות אצל ילדים, אנשים ללא דיבור פנימי, הפיכת שיחה עצמית ביקורתית לכלי פרודוקטיבי. פרופ' חמוטל קריינר, שפה וחשיבה."],
+  [99, "מאונדה עד פרו — טקסי איוואסקה, פסיכדלים ומפגש עם נשמות", "דצמבר 2025", "טקסי איוואסקה, חוויות פסיכדליות, מחקר תודעה. מה משתנה אחרי פסיכדלים, שעות לעומת שנות טיפול, טיפול בסיוע פסיכדלים, האמזונס, חוויות רוחניות. ד\"ר איתמר כהן, פסיכולוג קליני."],
+  [98, "זה לא חייב לכאוב — כאב כרוני", "נובמבר 2025", "כאב נוירופלסטי — כאב שמקורו במוח ולא בנזק פיזי. 85% ממקרי כאב הגב הכרוני, כאב אגן, טיפול שמפחית כאב ב-66% מהמקרים. לחי גבע מסבירה את מסע ההחלמה שלה."],
+  [97, "מוזיקה ללב היא חודרת — מוזיקה מוח ורגש", "אוקטובר 2025", "השפעת המוזיקה על המוח — למה אנחנו זוכרים ג'ינגלים ישנים, תגובות רגשיות למוזיקה, תקפות אפקט מוצרט, פרקינסון, צמרמורת מוזיקלית, נוירומדע של מוזיקה. אמית אברון."],
+  [96, "איך באמת משנים הרגלים?", "אוקטובר 2025", "מנגנוני שינוי הרגלים — למה הסברים לא עובדים, סביבה קובעת הצלחה, שינוי התנהגותי מתמשך. ד\"ר אפרת גיל התמרה מ-125 ק\"ג לספורטאית. מה גורם לשינוי אמיתי."],
+  [95, "לצאת מהגיהנום הרגשי — טיפול DBT", "ספטמבר 2025", "טיפול DBT דיאלקטי-התנהגותי — פותח על ידי פרופ' מרשה לינהאן מטראומה אישית. ויסות רגשי, אישיות גבולית, דיסרגולציה רגשית, סבילות למצוקה, מיינדפולנס. אסתי ברוקמן, פסיכולוגית קלינית."],
+  [94, "עובד מחפש משמעות", "ספטמבר 2025", "משמעות בעבודה — מה יוצר סיפוק בעבודה, שחיקה לעומת חוסר משמעות עמוק, סיבות לעזיבת מקומות עבודה, מרכיבי עבודה משמעותית. יארה אלדמה, פסיכולוגית תעסוקה."],
+  [93, "הגלילה האינסופית — ההתמכרות לטכנולוגיה", "אוגוסט 2025", "התמכרות לטכנולוגיה ורשתות חברתיות — גלילה אינסופית, אלגוריתמים, פסיכולוגיה של גיימינג, זמן מסך, מי מרוויח מהקשב שלך, בוטים, מניפולציה קוגניטיבית. ליאור ברודר."],
+  [92, "סוד ההצלחה", "יולי 2025", "פסיכולוגיה של הצלחה — מה מבדיל אנשים מצליחים, הגדרה אחת לעומת רבות, הצבת מטרות, גיל 50 כנקודת שיא, הערכת הצלחה נכונה. פרופ' עוז גוטרמן, מנטור מנהיגים ומחנכים."],
+  [91, "מישהו מקשיב לי, שומע אותי", "יולי 2025", "הקשבה פעילה כמיומנות נדירה — 20 שניות לפני הפרעה, קשב, מכשולים מודרניים להקשבה אמיתית, בית-ספר להקשבה, אמפתיה. שרי ג'קסון קליין, מייסדת מרכז ההקשבה הישראלי."],
+  [90, "כולנו צריכים טיפול?", "יוני 2025", "900,000 ישראלים עם PTSD, דיכאון או חרדה אחרי השביעי באוקטובר. איך יודעים אם צריך טיפול, איזה סוג מתאים, עומס על מערכת בריאות הנפש, פסיכיאטריה, נגישות לטיפול. ד\"ר ירדן לבינסקי."],
+  [89, "ילדים זה שמחה? — על אל הורות", "מאי 2025", "בחירה לא להביא ילדים בישראל — לחץ חברתי, שיעור הילודה הגבוה ב-OECD, בחירה לא להיות הורים, לחץ מתי אתם מביאים, מורכבות פסיכולוגית של אי-הורות. עובדים סוציאליים."],
+  [88, "תאי לחץ — לחדש את המוח", "מאי 2025", "טיפול בתא לחץ היפרברי — מרפא פצעים פיזיים ומוחיים. PTSD, פיברומיאלגיה, טרום-דמנציה, שיקום לאחר שבץ, חידוש רקמות מוח, ריפוי בלתי-צפוי. פרופ' שי אפרתי."],
+  [87, "חרדה — לפרק גולם וליצור פרפר", "אפריל 2025", "פסיכולוגיה של חרדה — פחדים קיומיים, מוות, כישלון, דחייה, חרדת אקלים, חרדה מ-AI. לחיות עם חרדה תוך שמירת שפיות, ניהול חרדה. עומר שריר, מומחה לחרדה."],
+  [86, "המוח של איינשטיין — אינטליגנציה, סביבה ותורשה", "מרץ 2025", "מוחו של איינשטיין נגנב על ידי הפתולוג הארווי, מחקר לא פורסם מעולם. אנטומיה של אינטליגנציה, טבע מול גידול, גנטיקה ומנת משכל, מבנה מוח וגאונות. עיתונאי סטיב לוי."],
+  [85, "מבחני אינטליגנציה — המקרה של דריל לסטר", "מרץ 2025", "הטיה במבחני אינטליגנציה וגזענות — מקרה דריל לסטר, אבחון שגוי בחינוך מיוחד, תביעה היסטורית בקליפורניה, תלמידים אפרו-אמריקאים נאסר עליהם לגשת למבחני IQ. ד\"ר ג'ורדן גליקסמן."],
+  [84, "להיות בלשי אהבה — איך מתקשרים בזוגיות?", "פברואר 2025", "תקשורת זוגית ושמירה על מערכת יחסים — סיום שלב ירח הדבש, שגרה, קירות עולים, אכזבה, תסכול. למה הכל תלוי בתקשורת ובהקשבה. סלבי פרידמן, מאמן זוגות."],
+  [83, "כדור הארץ שטוח — פסיכולוגיה קונספרטיבית", "ינואר 2025", "פסיכולוגיה של תיאוריות קונספירציה — רצח רבין, שבב בחיסון, כפירה בנחיתה על הירח, ארץ שטוחה, קורונה. למה אנשים מאמינים, למה קשה להפריך, אחוז יציב של מאמינים. ד\"ר חיים שפירא."],
+  [82, "דרך המסך — טיפול אינטרנטי", "ינואר 2025", "טיפול מקוון וטלה-תרפיה — מחסור במטפלים בישראל ובעולם, דיגיטציה בקורונה, האם AI יכול להחליף מטפלים, יעילות בריאות נפש דיגיטלית. ד\"ר יוני שלום, אוניברסיטת חיפה."],
+  [81, "כוחה של קבוצה — אנליזה קבוצתית", "דצמבר 2024", "טיפול קבוצתי — נולד אחרי משבר בריאות הנפש שלאחר מלחמת העולם השנייה, דינמיקה קבוצתית לעומת טיפול פרטני, למי מתאים, ריפוי קולקטיבי, פסיכואנליזה. יעל שחר."],
+  [80, "הפסיכולוגיה של ההגשמה העצמית — איך בוחרים מקצוע?", "נובמבר 2024", "פסיכולוגיה של בחירת קריירה וזהות תעסוקתית — השפעת הורים, זיהוי חוזקות, הגשמה עצמית תעסוקתית, עיצוב חיים, משבר קריירה. פרופ' הדסה ליטמן עובדיה."],
+  [79, "אכילה רגשית — ממחר דיאטה?", "אוקטובר 2024", "אכילה רגשית — אכילת נחמה, אוכל כעונש או פרס, הגבלה ואכילת יתר, קשר בין אוכל משקל ודימוי גוף, אכילה מודעת, פסיכולוגיית תזונה. טל חמרה ששון, דיאטנית קלינית."],
+  [78, "אחים — יחסי אהבה שנאה", "ספטמבר 2024", "יחסי אחים — השפעות סדר לידה, תחרות על משאבים ותשומת לב, פערי מגדר וגיל, תכונות אישיות של בכור אמצעי וצעיר, יריבות ואהבת אחים. ד\"ר אבידן מילבסקי."],
+  [77, "איך בגדים משפיעים עלינו? הפסיכולוגיה של הלבוש", "ספטמבר 2024", "פסיכולוגיה של אופנה — השפעת בגדים על מצב הרוח ותחושות, ויסות רגשי דרך לבוש, תפיסה עצמית, ביטחון עצמי, enclothed cognition. ד\"ר טלי סטולובי, חוקרת פסיכולוגיית לבוש."],
+  [76, "אני מרגיש משמע אני קיים", "אוגוסט 2024", "רגשות וקבלה רגשית — מהם רגשות, עיבוד רגשי בריא, עלויות ניתוק רגשי, חיבור לרגשות פנימיים. ד\"ר אלינור פרדס, פסיכולוגית קלינית."],
+  [75, "איך אנחנו תופסים את העולם?", "יולי 2024", "תפיסה חזותית ומציאות — תופעת השמלה (זהב-לבן מול כחול-שחור), הבדלי תפיסה בין אנשים, תפיסת מבוגרים לעומת ילדים, אשליות אופטיות, מציאות אובייקטיבית או סובייקטיבית. פרופ' צבי גנל."],
+  [74, "כל העיניים אליי — חרדה חברתית", "יוני 2024", "הפרעת חרדה חברתית — ההבדל מביישנות, מתח בבטן, פחד ממבטי אחרים, חרדת דיבור, הימנעות משיחות, טיפול CBT, טיפול בחשיפה. ד\"ר מרים לוין-גורן, פסיכולוגית קלינית."],
+  [73, "משעמם לי וזה בלתי נסבל — למה חשוב להשתעמם?", "יוני 2024", "פסיכולוגיה של שעמום — מהו שעמום, למה הוא חשוב, אסטרטגיות יציאה ממנו, סקרנות, יצירתיות ושעמום, שביעות רצון מהחיים. ד\"ר גדי-עון, חוקר שעמום, הפקולטה הפתוחה."],
+  [72, "מהי מודעות?", "מאי 2024", "פסיכולוגיה של תודעה — היכן נמצאת התודעה, מוח לעומת דואליזם, תודעת בעלי חיים, תודעת AI עתידית, הבעיה הקשה של תודעה. פרופ' ליאד מודריק, מדעי המוח אוניברסיטת תל אביב."],
+  [71, "פגיעה מוסרית — אל תמחאו לי כפיים", "מאי 2024", "פגיעה מוסרית — פגיעה במוסריות ולא בגוף, חיילים, השביעי באוקטובר, טראומה, PTSD, זיכרון דור שפיר שנרצח בשביעי באוקטובר. פרופ' יוסי לוי-בלז, מומחה לטראומה."],
+  [70, "למה קשה לנו לקבל החלטות?", "מאי 2024", "פסיכולוגיה של קבלת החלטות — 35,000 החלטות ביום, עייפות החלטות, הטיה קוגניטיבית, מהי החלטה טובה, שיפור תהליך ההחלטה, שיתוק מבחירה. אלעד מיכלוביץ-סוקר."],
+  [69, "עיוותי חשיבה — הרכיב הקוגניטיבי של CBT", "אפריל 2024", "עיוותי חשיבה — קריאת מחשבות, הפרטה, האשמה עצמית, קטסטרופיזציה, חשיבה שחור-לבן, מסגור מחדש בCBT, דפוסי דיכאון וחרדה. אשר שורק, פסיכולוג חינוכי."],
+  [68, "הסודות שאנו מסתירים", "אפריל 2024", "סודות לעומת שקרים — מסרים מעורבים בילדות, סוגי סודות, עלויות אישיות של סודות, מתי סודות מזיקים, טיפול זוגי ומשפחתי. נעמה משה, מטפלת CBT."],
+  [67, "מוט הברזל ששינה את פיניאס גייג׳ — על נוירופסיכולוגיה", "מרץ 2024", "מקרה נוירופסיכולוגי — פיניאס גייג' 1848, מוט ברזל דרך המוח, שינוי אישיות לאחר פגיעת מוח, אונה קדמית, התנהגות ואופי. ד\"ר נעמה קיבילס מאירי, נוירופסיכולוגית שיקומית."],
+  [66, "צעדים קטנים ליצירת שינויים גדולים", "מרץ 2024", "צעדים קטנים לשינוי גדול — יצירת הרגלים, עיצוב סביבה, מדוע קשה לבנות הרגלים בריאים, התמדה, עקביות. חלק ב'. יהודית כץ, מנחת פודקאסט Thinking Well."],
+  [65, "יצירת הרגלים חדשים", "פברואר 2024", "יסודות יצירת הרגלים — מהם הרגלים, ההבדל בין מטרות הרגלים והתמכרויות, בניית הרגלים בריאים והיפטרות ממזיקים. חלק א'. יהודית כץ, מנחת פודקאסט Thinking Well."],
+  [64, "האושר טמון בחברות אמת", "פברואר 2024", "חברויות משמעותיות ואושר — מחקר הרווארד 75 שנה משנת 1938, קשרים חברתיים וכל תחומי החיים, הבדלי מגדר בחברות, קשרים משמעותיים. ד\"ר אלון וסרמן, מייסד תוכנית Friends."],
+  [63, "משמעות מחפשת אדם", "ינואר 2024", "משמעות בחיים המודרניים — שאלה קיומית, למה לקום בבוקר, משמעות כשאין אמת אחת, משמעות בזמן משבר. ד\"ר פנינית רוסוב-נצר, חוקרת ומרצה."],
+  [62, "מציאת קצב הלב הנכון", "ינואר 2024", "ויסות קצב לב, ויסות רגשי דרך נשימה, ביופידבק, קוהרנטיות לב, מערכת עצבים, הרפיה ושליטה פיזיולוגית."],
+  [61, "השינוי מתחיל היום", "דצמבר 2023", "שינוי התנהגות והתגברות על דחיינות — קיפאון התנהגותי, מוטיבציה, להתחיל מחדש, החלטות לשנה חדשה, איך משנים בפועל."],
+  [60, "מה הזהות הדיגיטלית שלנו אומרת עלינו?", "דצמבר 2023", "זהות דיגיטלית וייצוג עצמי מקוון — רשתות חברתיות, אינסטגרם, ניהול רושם, מה ההתנהגות המקוונת שלנו חושפת, טביעת רגל דיגיטלית."],
+  [59, "אני לא אתנהג כמו ההורים שלי", "נובמבר 2023", "טראומה בין-דורית ודפוסי משפחה — שבירת מעגלים, הורות שונה, טראומה עוברת, איך אנחנו חוזרים על התנהגות ההורים שלנו, פצעי ילדות."],
+  [58, "תנועה לעבור החלמה", "נובמבר 2023", "נרטיבים של החלמה מפוסט-טראומה, טיפול בתנועה, בעקבות השביעי באוקטובר, ריפוי אחרי אירועים טראומטיים, חוסן, טיפול סומטי."],
+  [57, "מלחמה — חרדה, אשמה וחוסן", "אוקטובר 2023", "פסיכולוגיה של מלחמה — חרדה ופחד בזמן מלחמה, אשמת שורדים, חוסן נפשי, בריאות נפש בזמן עימות, השביעי באוקטובר, התמודדות חיילים ואזרחים."],
+  [55, "במי אנחנו מקנאים ולמה", "אוקטובר 2023", "קנאה ורגשנות — ההבדל בין קנאה לקנאנות, השוואה חברתית, למה אנחנו מקנאים, תגובות רגשיות להצלחת אחרים, התמודדות עם קנאה."],
+  [54, "להגיב טוב יותר", "ספטמבר 2023", "ויסות רגשי — תגובה לעומת פעולה, ניהול תגובות רגשיות, טריגרים, עצירה לפני התגובה, אינטליגנציה רגשית, ניהול כעסים."],
+  [51, "הטוב המוחלט, הרע המוחלט", "אוגוסט 2023", "תיאוריית קליין הפסיכואנליטית — יחסי אובייקט, מנגנון הפיצול, אובייקטים טובים ורעים, הזדהות השלכתית, פסיכולוגיה גבולית."],
+  [50, "איך להגן על הילדים שלנו", "אוגוסט 2023", "הגנת ילדים מאלימות משפחתית — חשיפת ילדים לאלימות ביתית, חוסן בילדים, אסטרטגיות הורות, הגנת ילדים."],
+  [49, "הילדה שחלמה על חיים אחרים", "אוגוסט 2023", "התעללות רגשית והזנחה בילדות — גדילה במשפחה קשה, השפעות טראומת ילדות, ריפוי מפצעי ילדות."],
+  [48, "איך לתקן לב שבור", "אוגוסט 2023", "ריפוי מאהבה — פסיכולוגיה של פרידה, אבל לאחר סיום קשר, אהבה עצמית אחרי פרידה, ריפוי רגשי, התקשרות ואובדן."],
+  [47, "איך אנחנו מגינים על עצמנו — מנגנוני הגנה, חלק ב׳", "יולי 2023", "מנגנוני הגנה חלק ב' — השלכה, הכחשה, רציונליזציה, אינטלקטואליזציה, סובלימציה, פיצול, תיאוריית ההגנה הפסיכואנליטית."],
+  [46, "אל תוך הלא מודע — מנגנוני הגנה, חלק א׳", "יולי 2023", "מנגנוני הגנה לא-מודעים חלק א' — פרויד, הדחקה, התת-מודע, למה אנחנו מפתחים הגנות, תיאוריה פסיכואנליטית."],
+  [45, "האם כולנו מכורים?", "יוני 2023", "פסיכולוגיה של התמכרות — מהי התמכרות, סוגי התמכרויות, דופמין ומערכת התגמול, התמכרות התנהגותית, שימוש בסמים, טיפול, החלמה."],
+  [44, "למה קשה לנו לבחור", "יוני 2023", "שיתוק הבחירה — פרדוקס הבחירה, חרדת החלטות, בארי שוורץ, אפשרויות רבות מדי, מקסימייזרים לעומת מסתפקים, בחירת קריירה וזוגיות."],
+  [43, "האם הפרעות קשב וריכוז הן בעיות?", "מאי 2023", "ADHD הפרעת קשב וריכוז — אבחון, אבחון-יתר, השפעה חינוכית, תרופות, הגדרה מחדש של ADHD כשונה ולא כלוקה, מבוגרים עם ADHD."],
+  [42, "קודם כל תרגעו", "מאי 2023", "ניהול מתח — טכניקות הרפיה, תרגילי נשימה, הרפיית שרירים מתקדמת, השפעות מתח כרוני, אסטרטגיות התמודדות, מתח בעבודה."],
+  [41, "זהירות מתחזה לפנייך", "אפריל 2023", "תסמונת המתחזה — ספק עצמי, תחושת הונאה, חרדה של בעלי הישגים גבוהים, פרפקציוניזם, מי סובל מתסמונת המתחזה, כיצד להתגבר עליה."],
+  [40, "הסוד לגירושים בריאים", "אפריל 2023", "פסיכולוגיה של גירושים — השפעת הפרידה על ילדים, הורות משותפת, איך אומרים לילדים על גירושים, ריפוי רגשי לאחר סיום קשר."],
+  [39, "איך אפשר להציל חיים", "מרץ 2023", "מניעת התאבדות — זיהוי סימני אזהרה, מה לומר למישהו בסיכון, התערבות במשבר, עזרה ראשונה נפשית, איך לעזור לחבר."],
+  [38, "המחיר האמיתי של הסמארטפון", "מרץ 2023", "התמכרות לסמארטפון ופסיכולוגיה — השפעות זמן מסך, אור כחול, השוואה חברתית ברשתות, FOMO, רווחה דיגיטלית, ילדים וטלפונים."],
+  [37, "להסתגל למציאות חדשה", "מרץ 2023", "הסתגלות להפרעת הסתגלות — אבל, אובדן, התמודדות עם שינוי, הגירה, גירושים, מוות, מעברי חיים משמעותיים, חוסן."],
+  [36, "לקבל, להתחייב, לעשות שינוי", "פברואר 2023", "טיפול ACT — קבלה ומחויבות, גמישות פסיכולוגית, מיינדפולנס, בירור ערכים, פעולה מחויבת, חיים משמעותיים."],
+  [35, "אינטליגנציה בריאותית", "ינואר 2023", "קשר גוף-נפש — פסיכולוגיית בריאות, מחלה פסיכוסומטית, אפקט הפלצבו, כיצד רגשות משפיעים על בריאות פיזית, פסיכולוגיית רווחה."],
+  [34, "ללא סימנים כחולים", "ינואר 2023", "התעללות רגשית בלתי נראית — נזק פסיכולוגי ללא סימנים פיזיים, התעללות סמויה, מניפולציה, גזלייטינג, זיהוי דפוסי התעללות רגשית."],
+  [33, "לשחרר את הנוקשות", "ינואר 2023", "גמישות פסיכולוגית — התגברות על קשיחות קוגניטיבית, חשיבה שחור-לבן, קבלת אי-ודאות, גמישות מנטלית, פתיחות לשינוי."],
+  [32, "האישה שברחה 3 ימים לפני החתונה", "ינואר 2023", "זיהוי התעללות בקשר לפני ההתחייבות — דגלים אדומים, קשירת טראומה, פחד-קור לעומת סכנה אמיתית, קשרים רעילים, בריחה ברגע האחרון."],
+  [31, "המגיפה השקטה", "ינואר 2023", "הפרעות שינה — נדודי שינה, השפעות מחסור בשינה, השפעה פסיכולוגית של שינה גרועה, CBT לנדודי שינה, היגיינת שינה, המגיפה השקטה."],
+  [30, "יש ברירה אחרת — אלימות פיזית ורגשית", "דצמבר 2022", "מילוט מאלימות במשפחה — שרידים מהתעללות פיזית ורגשית, אסטרטגיות יציאה, מערכות תמיכה, משאבים ועזרה לנפגעי אלימות ביתית."],
+  [29, "סימנים מקדימים לאלימות פיזית ורגשית", "דצמבר 2022", "סימני אזהרה מוקדמים לאלימות במשפחה — דגלים אדומים, דפוסי התעללות, זיהוי אלימות בשלב מוקדם, מניעה, קשרים בסיכון."],
+  [28, "מזל טוב? — דיכאון אחרי לידה", "דצמבר 2022", "דיכאון אחרי לידה — PPD, בייבי בלוז, בריאות נפש סב-לידתית, דיכאון אמהי, חרדה אחרי לידה, הורמונים ומצב רוח, הורים חדשים."],
+  [27, "זיהוי האלימות השקופה — אלימות רגשית וכלכלית", "דצמבר 2022", "זיהוי התעללות בלתי נראית בקשר — גזלייטינג, מניפולציה פסיכולוגית, שליטה כלכלית, התעללות פיננסית, התעללות רגשית ללא סימנים פיזיים."],
+  [26, "אין מחיר לחופש — אלימות רגשית וכלכלית", "דצמבר 2022", "שליטה פיננסית ורגשית בקשרים — שליטה כלכלית, בידוד שותף, שליטה כפויה, אלימות ביתית, מילוט וחירות."],
+  [25, "סביבה או תורשה — מה מעצב אותנו יותר?", "נובמבר 2022", "טבע מול גידול — ויכוח גנטיקה לעומת סביבה, אפיגנטיקה, מחקרי תאומים, עיצוב אישיות, מה מעצב את מי שאנחנו."],
+  [24, "אנשים רגישים מאוד", "נובמבר 2022", "אדם רגיש מאוד HSP — תכונת רגישות רגשית, רגישות עיבוד חושי, אינטרוברסיה, גירוי-יתר, מחקר אליין ארון, מאפייני HSP."],
+  [23, "מחשבה יוצרת מציאות?", "נובמבר 2022", "חשיבה חיובית ופסיכולוגיית אמונה — תקפות חוק המשיכה, נבואה עצמית מתממשת, אפקטי פלצבו ונוסבו, פסיכולוגיה של מניפסטציה."],
+  [22, "לאהוב את עצמי… קצת יותר מדי", "אוקטובר 2022", "נרציסיזם ודימוי עצמי — הפרעת אישיות נרציסיסטית, נרציסיזם בריא לעומת פתולוגי, אהבה עצמית, גרנדיוזיות, גרעון אמפתיה, קשרים עם נרציסיסט."],
+  [21, "איך מטפלים בפוסט טראומה?", "אוקטובר 2022", "שיטות טיפול ב-PTSD — EMDR, CBT חשיפה, תרופות, חשיפה ממושכת, טיפול ממוקד-טראומה, מתי וכיצד PTSD מחלים."],
+  [20, "שבויה באהבה — פוסט טראומה מורכבת", "ספטמבר 2022", "PTSD מורכב מטראומת קשרים — C-PTSD, קשירת טראומה, תסמונת סטוקהולם, עזיבת קשרים מתעללים, שבי רגשי באהבה."],
+  [19, "המילואימניק שחזר שונה — פוסט טראומה", "אוגוסט 2022", "PTSD צבאי — מתח קרבי, טראומת מילואימניקים, חיילים שחזרו הביתה שונים, פצעי מלחמה שאינם נראים, בריאות נפש בצה\"ל."],
+  [18, "אהבה ממבט ראשון", "אוגוסט 2022", "פסיכולוגיה של אהבה ממבט ראשון — משיכה רומנטית, לימרנס, התאהבות, תיאוריית ההתקשרות, כימיה וביולוגיה של נפילה באהבה."],
+  [17, "האם אתם שפויים?", "אוגוסט 2022", "שפיות ואי-שפיות — מהי בריאות נפשית, אי-שפיות משפטית, פסיכוזה, היכן מסתיים הנורמלי ומתחילה ההפרעה, אבחון פסיכיאטרי."],
+  [16, "רק על הקווים — OCD", "יולי 2022", "OCD הפרעה אובססיבית-כפייתית — מחשבות פולשניות, כפייתיות, טקסים, פחד מזיהום, בדיקה, טיפול ERP חשיפה-ומניעת-תגובה, CBT."],
+  [15, "עד כמה אתם ניתנים להיפנוט?", "יולי 2022", "היפנוטיזציה וסוגסטיביות — מי ניתן להיות מהופנט, גורמי רגישות להיפנוזה, הבדלים בין אנשים, נטייה לפנטזיה."],
+  [14, "היפנוזה — אומנות המיקוד", "יוני 2022", "היפנותרפיה — כיצד עובדת היפנוזה, יישומים טיפוליים, ניהול כאב, פוביות, גמילה מעישון, היפנוזה קלינית, מצבי תודעה משתנים."],
+  [13, "חלומות — הדרך ללא מודע", "מאי 2022", "פסיכולוגיה של חלומות — שינת REM, פרשנות חלומות פרויד, מה חלומות מסמלים, חלומות חוזרים, סיוטים, חלום צלול, התת-מודע."],
+  [12, "האם אנחנו יכולים לסמוך על הזיכרון שלנו?", "מאי 2022", "זיכרון שקרי ואמינות הזיכרון — עדות ראיה, ניסויי אליזבת לופטוס, עיוות זיכרון, זיכרונות מושתלים, כיצד הזיכרון נבנה מחדש."],
+  [11, "האכזריות של הנאצים — פסיכולוגיה של הרוע", "אפריל 2022", "פסיכולוגיה של הנאצים והשואה — ציות לסמכות, ניסוי מילגרם, הבנאליות של הרוע של ארנדט, כיצד אנשים רגילים מבצעים זוועות, פסיכולוגיית מבצעי פשעים."],
+  [10, "החיים לצד הפרעת האכילה", "אפריל 2022", "הפרעות אכילה — אנורקסיה נרבוסה, בולימיה, אכילה כפייתית, אורתורקסיה, החלמה, עיוות דימוי גוף, טיפול, סיפורי שרידות."],
+  [9, "50 גוונים של שליטה", "אפריל 2022", "פסיכולוגיה של BDSM — דינמיקות שליטה מינית, שליטנות וכניעה, החלפת כוח, הסכמה, פרפיליה, פסיכולוגיה של קינק."],
+  [8, "האם כולנו ביסקסואלים?", "מרץ 2022", "פסיכולוגיה של נטייה מינית — ביסקסואליות, סולם קינזי, ספקטרום המיניות, גמישות מינית, פסיכולוגיה של הומוסקסואליות, היסטוריית מחקר המיניות."],
+  [7, "מוח מסודר מידי — סמים פסיכדליים, חלק ב׳", "מרץ 2022", "פסיכדלים והמוח חלק ב' — רשת מצב ברירת מחדל, פירוק האגו, השפעות LSD ופסילוסיבין על ארגון המוח, שימוש טיפולי, חוויות מיסטיות."],
+  [6, "מולקולות להרחבת תודעה — סמים פסיכדליים, חלק א׳", "פברואר 2022", "היסטוריה ומחקר פסיכדלים חלק א' — LSD, פטריות פסיכדליות, DMT, MDMA, הרחבת תודעה, טימות'י לירי, רנסנס הפסיכדלים."],
+  [5, "תסמונת קדם וסתית — יש דבר כזה?", "פברואר 2022", "PMS תסמונת קדם וסתית — השפעות הורמונים על מצב הרוח והתנהגות, PMDD, מחזור וסתי ופסיכולוגיה, בריאות נפש נשית, שינויים רגשיים לפני הווסת."],
+  [4, "הפסיכולוגיה של כתות, חלק ב׳", "ינואר 2022", "פסיכולוגיה של כתות חלק ב' — מילוט מכת, ביטול תכנות, הפגזת אהבה, שליטה במידע, תפיסת אנחנו לעומת הם, החלמה מכת."],
+  [3, "הפסיכולוגיה של כתות, חלק א׳", "ינואר 2022", "פסיכולוגיה של כתות חלק א' — טקטיקות מניפולציה, שליטה חברתית, שכנוע כפוי, למה אנשים חכמים מצטרפים לכתות, רפורמת חשיבה."],
+  [2, "עד כמה אנחנו מרשים לעצמנו להיות...עצמנו?", "דצמבר 2021", "אותנטיות וביטוי עצמי — לחץ חברתי להיות תואמים, העצמי האמיתי, כמה אנחנו מאפשרים לעצמנו להיות, מסכות שאנחנו חובשים, הסתרה עצמית."],
+  [1, "האישה ששכחה הכל", "נובמבר 2021", "אובדן זיכרון ואמנזיה — הפרעות זיכרון אוטוביוגרפיות, מי אנחנו בלי הזיכרונות שלנו, זהות וזיכרון, מקרים של אמנזיה כוללת."],
 ];
 
-// ── Search ────────────────────────────────────────────────────────────────────
+function makeSlug(title) {
+  const cleaned = title
+    .replace(/[—–,?!'".()\[\]\/׳״]/g, ' ')
+    .replace(/-/g, ' ')
+    .trim()
+    .replace(/\s+/g, '-');
+  const full = cleaned + '-עושים-פסיכולוגיה';
+  return [...full].slice(0, 37).join('');
+}
 
-function normalize(str) {
-  return str.toLowerCase().trim();
+function epUrl(title) {
+  return 'https://osimhistoria.com/podcast/' + makeSlug(title) + '/';
+}
+
+function normalize(str) { return str.toLowerCase().trim(); }
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function highlight(text, terms) {
@@ -239,36 +284,24 @@ function highlight(text, terms) {
   return escHtml(text).replace(re, '<mark>$1</mark>');
 }
 
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
 function scoreEpisode(ep, terms) {
   const titleNorm = normalize(ep[1]);
   const descNorm  = normalize(ep[3]);
   let score = 0;
-
   for (const t of terms) {
     const tl = normalize(t);
     if (!tl) continue;
-    // Exact word in title: high weight
     if (titleNorm.includes(tl)) score += titleNorm === tl ? 100 : 60;
-    // In description
     if (descNorm.includes(tl))  score += 20;
   }
-
-  // Bonus: all terms present somewhere
-  const allInTitle = terms.every(t => titleNorm.includes(normalize(t)));
-  const allInDesc  = terms.every(t => descNorm.includes(normalize(t)));
-  if (allInTitle) score += 40;
-  if (allInDesc)  score += 10;
-
+  if (terms.every(t => titleNorm.includes(normalize(t)))) score += 40;
+  if (terms.every(t => descNorm.includes(normalize(t))))  score += 10;
   return score;
 }
 
 function doSearch(query) {
   const q = query.trim();
-  if (q.length < 2) return null; // null = show prompt state
+  if (q.length < 2) return null;
   const terms = q.split(/\s+/).filter(t => t.length >= 1);
   return EPISODES
     .map(ep => ({ ep, score: scoreEpisode(ep, terms) }))
@@ -276,59 +309,43 @@ function doSearch(query) {
     .sort((a, b) => b.score - a.score || b.ep[0] - a.ep[0]);
 }
 
-// ── Render ────────────────────────────────────────────────────────────────────
-
 function renderCard(ep, terms) {
   const [num, title, date, desc] = ep;
-  const hlTitle = highlight(title, terms);
-  const hlDesc  = highlight(desc, terms);
   return `
     <div class="ep-card">
       <div class="ep-top">
         <span class="ep-num">פרק ${num}</span>
-        <span class="ep-title">${hlTitle}</span>
+        <span class="ep-title">${highlight(title, terms)}</span>
         <span class="ep-date">${date}</span>
       </div>
-      <div class="ep-desc">${hlDesc}</div>
-      <a class="ep-listen" href="https://osimhistoria.com/show/osim-psychology/#listen" target="_blank" rel="noopener">
-        להאזנה →
-      </a>
+      <div class="ep-desc">${highlight(desc, terms)}</div>
+      <a class="ep-listen" href="${epUrl(title)}" target="_blank" rel="noopener">להאזנה ←</a>
     </div>`;
 }
 
 function renderState(results, query) {
   const ri = document.getElementById('result-info');
   const rd = document.getElementById('results');
-
   if (results === null) {
     ri.innerHTML = '';
-    rd.innerHTML = '<div class="state-msg"><strong>🎙</strong>הקלידו נושא, תסמונת, שם טיפול או כל מילת מפתח</div>';
+    rd.innerHTML = '<div class="state-msg"><strong>🧠</strong>הקלידו נושא, תסמונת, שם טיפול או כל מילת מפתח</div>';
     return;
   }
-
   const terms = query.trim().split(/\s+/).filter(Boolean);
-
   if (results.length === 0) {
     ri.innerHTML = '';
     rd.innerHTML = `<div class="state-msg"><strong>🔎</strong>לא נמצאו פרקים עבור "<b>${escHtml(query)}</b>"<br><br><small>נסו מילה אחרת — למשל: חרדה, OCD, טראומה, זוגיות…</small></div>`;
     return;
   }
-
   ri.innerHTML = `<span>${results.length}</span> פרק${results.length !== 1 ? 'ים' : ''} נמצא${results.length !== 1 ? 'ו' : ''}`;
   rd.innerHTML = results.map(r => renderCard(r.ep, terms)).join('');
 }
 
-// ── Boot ──────────────────────────────────────────────────────────────────────
-
 const input = document.getElementById('search-input');
-
 input.addEventListener('input', () => {
   const q = input.value;
-  const results = doSearch(q);
-  renderState(results, q);
+  renderState(doSearch(q), q);
 });
-
-// Initial state
 renderState(null, '');
 </script>
 </body>
